@@ -131,6 +131,16 @@
             align-items: center;
             gap: 15px;
         }
+
+        .alert-message {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            display: none;
+        }
+        .alert-error { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+        .alert-success { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
     </style>
 </head>
 <body>
@@ -167,7 +177,14 @@
             <input type="text" id="searchAlunos" class="search-bar" placeholder="Pesquisar por nome...">
             <div style="max-height: 500px; overflow-y: auto;">
                 <table>
-                    <thead><tr><th>Posição</th><th>Nome do Aluno</th><th class="admin-only">Ações</th></tr></thead>
+                    <thead>
+                        <tr>
+                            <th>Nº</th>
+                            <th>Nome do Aluno</th>
+                            <th>Posição</th>
+                            <th class="admin-only">Ações</th>
+                        </tr>
+                    </thead>
                     <tbody id="alunoTableBody"></tbody>
                 </table>
             </div>
@@ -179,6 +196,7 @@
         <div id="auth-area" style="max-width: 400px; margin: 0 auto; text-align: center;">
             <div class="card">
                 <h3>Acesso do Aluno</h3>
+                <div id="auth-alert" class="alert-message"></div>
                 <input type="email" id="userEmail" placeholder="E-mail">
                 <input type="password" id="userPass" placeholder="Senha">
                 <button onclick="handleAuth('login')" style="width: 100%;">Entrar</button>
@@ -202,7 +220,7 @@
                 <h4>Adicionar Novo Aluno na Lista</h4>
                 <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
                     <input type="text" id="admNome" placeholder="Nome Completo">
-                    <input type="number" id="admPos" placeholder="Posição">
+                    <input type="number" id="admPos" placeholder="Posição Geral">
                     <button onclick="adicionarAluno()">Salvar</button>
                 </div>
             </div>
@@ -238,21 +256,24 @@
             document.getElementById('link-' + id).classList.add('active');
         };
 
-        // LISTA DINÂMICA
+        // LISTA DINÂMICA COM 3 COLUNAS E ORDEM CORRETA
         onSnapshot(query(collection(db, "alunos_lista"), orderBy("posicao", "asc")), (snapshot) => {
             const table = document.getElementById('alunoTableBody');
             table.innerHTML = "";
+            let contador = 1;
             snapshot.forEach((docSnap) => {
                 const a = docSnap.data();
                 const isAdmin = auth.currentUser?.email === ADMIN_EMAIL;
                 table.innerHTML += `
                     <tr>
-                        <td class="pos-tag">${a.posicao}º</td>
+                        <td>${contador}º</td>
                         <td><strong>${a.nome}</strong></td>
+                        <td class="pos-tag">${a.posicao}º</td>
                         <td class="admin-only" style="display: ${isAdmin ? 'table-cell' : 'none'}">
                             <button class="btn-delete" onclick="removerAluno('${docSnap.id}')">Excluir</button>
                         </td>
                     </tr>`;
+                contador++;
             });
         });
 
@@ -267,12 +288,43 @@
 
         window.removerAluno = async (id) => { if(confirm("Remover aluno?")) await deleteDoc(doc(db, "alunos_lista", id)); };
 
-        // AUTH & CHECKLIST
-        window.handleAuth = async (t) => {
-            const e = document.getElementById('userEmail').value;
-            const p = document.getElementById('userPass').value;
-            try { t === 'signup' ? await createUserWithEmailAndPassword(auth, e, p) : await signInWithEmailAndPassword(auth, e, p); }
-            catch(err) { alert(err.message); }
+        // TRATATIVA DE ERROS PROFISSIONAL
+        const showAuthAlert = (msg, type) => {
+            const alert = document.getElementById('auth-alert');
+            alert.innerText = msg;
+            alert.className = `alert-message ${type === 'error' ? 'alert-error' : 'alert-success'}`;
+            alert.style.display = 'block';
+            setTimeout(() => { alert.style.display = 'none'; }, 5000);
+        };
+
+        window.handleAuth = async (type) => {
+            const email = document.getElementById('userEmail').value;
+            const pass = document.getElementById('userPass').value;
+            
+            if (!email || !pass) {
+                showAuthAlert("Preencha todos os campos.", "error");
+                return;
+            }
+
+            try {
+                if (type === 'signup') {
+                    await createUserWithEmailAndPassword(auth, email, pass);
+                    showAuthAlert("Conta criada com sucesso! Bem-vindo.", "success");
+                } else {
+                    await signInWithEmailAndPassword(auth, email, pass);
+                }
+            } catch (error) {
+                let mensagem = "Erro ao processar. Tente novamente.";
+                switch (error.code) {
+                    case 'auth/email-already-in-use': mensagem = "Este e-mail já está cadastrado."; break;
+                    case 'auth/invalid-email': mensagem = "E-mail inválido."; break;
+                    case 'auth/weak-password': mensagem = "A senha deve ter pelo menos 6 caracteres."; break;
+                    case 'auth/wrong-password': mensagem = "Senha incorreta."; break;
+                    case 'auth/user-not-found': mensagem = "E-mail não encontrado."; break;
+                    case 'auth/invalid-credential': mensagem = "Credenciais inválidas. Verifique e-mail e senha."; break;
+                }
+                showAuthAlert(mensagem, "error");
+            }
         };
 
         window.logout = () => signOut(auth);
