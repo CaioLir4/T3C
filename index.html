@@ -1,0 +1,316 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POLO CASTANHAL T3 - Sistema de Gestão</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bombeiro-vermelho: #ce2029;
+            --bombeiro-dourado: #f1c40f;
+            --bg-dark: #0f172a;
+            --card-dark: #1e293b;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Urbanist', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        nav {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .logo { font-weight: 700; font-size: 20px; color: var(--bombeiro-vermelho); letter-spacing: 1px; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a {
+            color: var(--text-dim);
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .nav-links a.active, .nav-links a:hover { color: var(--bombeiro-dourado); }
+
+        .slide-container {
+            display: none;
+            min-height: 100vh;
+            padding: 100px 40px 40px;
+            width: 100%;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .slide-container.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card {
+            background: var(--card-dark);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 20px;
+        }
+
+        .hero-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .timer-card {
+            background: linear-gradient(135deg, var(--bombeiro-vermelho), #8b0000);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+        }
+        .timer-value { font-size: 60px; font-weight: 700; display: block; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { text-align: left; color: var(--bombeiro-dourado); padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        td { padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        .search-bar {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: #0f172a;
+            color: white;
+        }
+
+        button {
+            background: var(--bombeiro-vermelho);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover { opacity: 0.8; }
+
+        .btn-delete { background: #ef4444; padding: 6px 12px; font-size: 12px; }
+        .admin-only { display: none; }
+        .pos-tag { color: var(--bombeiro-dourado); font-weight: 700; }
+
+        .checklist-item {
+            background: rgba(255,255,255,0.03);
+            margin-bottom: 8px;
+            padding: 12px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo"><i class="fa-solid fa-fire"></i> CASTANHAL T3</div>
+        <div class="nav-links">
+            <a onclick="showSlide('home')" id="link-home" class="active">Início</a>
+            <a onclick="showSlide('lista')" id="link-lista">Lista T3</a>
+            <a onclick="showSlide('checklist')" id="link-checklist">Meu Enxoval</a>
+            <a onclick="showSlide('admin')" id="link-admin" class="admin-only">Painel ADM</a>
+        </div>
+    </nav>
+
+    <!-- INICIO -->
+    <div id="slide-home" class="slide-container active">
+        <div class="hero-section">
+            <div>
+                <h1>Gestão de Efetivo <span style="color:var(--bombeiro-vermelho)">T3</span></h1>
+                <p style="color: var(--text-dim);">Plataforma oficial para controle de enxoval e consulta de antiguidade do Polo Castanhal.</p>
+                <div class="timer-card" style="margin-top: 30px;">
+                    <span class="timer-value" id="days-timer">000</span>
+                    <span style="letter-spacing: 2px;">DIAS PARA O CFP</span>
+                </div>
+            </div>
+            <div style="background: url('https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&q=80&w=500') center; height: 300px; border-radius: 20px; border: 2px solid var(--bombeiro-dourado);"></div>
+        </div>
+    </div>
+
+    <!-- LISTA T3 -->
+    <div id="slide-lista" class="slide-container">
+        <div class="card">
+            <h2><i class="fa-solid fa-list-ol"></i> Lista de Colocados</h2>
+            <input type="text" id="searchAlunos" class="search-bar" placeholder="Pesquisar por nome...">
+            <div style="max-height: 500px; overflow-y: auto;">
+                <table>
+                    <thead><tr><th>Posição</th><th>Nome do Aluno</th><th class="admin-only">Ações</th></tr></thead>
+                    <tbody id="alunoTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- MEU CHECKLIST -->
+    <div id="slide-checklist" class="slide-container">
+        <div id="auth-area" style="max-width: 400px; margin: 0 auto; text-align: center;">
+            <div class="card">
+                <h3>Acesso do Aluno</h3>
+                <input type="email" id="userEmail" placeholder="E-mail">
+                <input type="password" id="userPass" placeholder="Senha">
+                <button onclick="handleAuth('login')" style="width: 100%;">Entrar</button>
+                <button onclick="handleAuth('signup')" style="background: #475569; width: 100%; margin-top: 10px;">Criar Conta</button>
+            </div>
+        </div>
+        <div id="checklist-area" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>Meu Enxoval Individual</h2>
+                <button onclick="logout()" style="background: #334155; padding: 8px 15px;">Sair</button>
+            </div>
+            <div id="items-list"></div>
+        </div>
+    </div>
+
+    <!-- PAINEL ADM -->
+    <div id="slide-admin" class="slide-container">
+        <div class="card">
+            <h2><i class="fa-solid fa-unlock-keyhole"></i> Painel do Administrador</h2>
+            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
+                <h4>Adicionar Novo Aluno na Lista</h4>
+                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
+                    <input type="text" id="admNome" placeholder="Nome Completo">
+                    <input type="number" id="admPos" placeholder="Posição">
+                    <button onclick="adicionarAluno()">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, addDoc, deleteDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDym9reAAHi0v9CpxXhHo4FoWAv6etmsXU",
+            authDomain: "cbmt3castanhal.firebaseapp.com",
+            projectId: "cbmt3castanhal",
+            storageBucket: "cbmt3castanhal.firebasestorage.app",
+            messagingSenderId: "923532708352",
+            appId: "1:923532708352:web:897d4f2f7208460290a6e5",
+            measurementId: "G-T3K5S92DSH"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const ADMIN_EMAIL = "caiodevanalista@gmail.com";
+
+        const itensEnxoval = ["Gandola / Calça", "Coturno", "Camisetas Brancas", "Gorro Fardado", "Cinto de Guarnição", "Meias Pretas", "Higiene Pessoal", "Kit Limpeza", "Kit Costura", "Protetor Solar"];
+
+        window.showSlide = (id) => {
+            document.querySelectorAll('.slide-container').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            document.getElementById('slide-' + id).classList.add('active');
+            document.getElementById('link-' + id).classList.add('active');
+        };
+
+        // LISTA DINÂMICA
+        onSnapshot(query(collection(db, "alunos_lista"), orderBy("posicao", "asc")), (snapshot) => {
+            const table = document.getElementById('alunoTableBody');
+            table.innerHTML = "";
+            snapshot.forEach((docSnap) => {
+                const a = docSnap.data();
+                const isAdmin = auth.currentUser?.email === ADMIN_EMAIL;
+                table.innerHTML += `
+                    <tr>
+                        <td class="pos-tag">${a.posicao}º</td>
+                        <td><strong>${a.nome}</strong></td>
+                        <td class="admin-only" style="display: ${isAdmin ? 'table-cell' : 'none'}">
+                            <button class="btn-delete" onclick="removerAluno('${docSnap.id}')">Excluir</button>
+                        </td>
+                    </tr>`;
+            });
+        });
+
+        window.adicionarAluno = async () => {
+            const nome = document.getElementById('admNome').value;
+            const pos = parseInt(document.getElementById('admPos').value);
+            if (nome && pos) {
+                await addDoc(collection(db, "alunos_lista"), { nome: nome, posicao: pos });
+                document.getElementById('admNome').value = ""; document.getElementById('admPos').value = "";
+            }
+        };
+
+        window.removerAluno = async (id) => { if(confirm("Remover aluno?")) await deleteDoc(doc(db, "alunos_lista", id)); };
+
+        // AUTH & CHECKLIST
+        window.handleAuth = async (t) => {
+            const e = document.getElementById('userEmail').value;
+            const p = document.getElementById('userPass').value;
+            try { t === 'signup' ? await createUserWithEmailAndPassword(auth, e, p) : await signInWithEmailAndPassword(auth, e, p); }
+            catch(err) { alert(err.message); }
+        };
+
+        window.logout = () => signOut(auth);
+
+        onAuthStateChanged(auth, user => {
+            const isAdmin = user?.email === ADMIN_EMAIL;
+            document.querySelectorAll('.admin-only').forEach(el => el.style.display = isAdmin ? 'block' : 'none');
+            
+            if (user) {
+                document.getElementById('auth-area').style.display = 'none';
+                document.getElementById('checklist-area').style.display = 'block';
+                loadChecklist(user.uid);
+            } else {
+                document.getElementById('auth-area').style.display = 'block';
+                document.getElementById('checklist-area').style.display = 'none';
+            }
+        });
+
+        async function loadChecklist(uid) {
+            const div = document.getElementById('items-list');
+            const docSnap = await getDoc(doc(db, "checklists", uid));
+            const data = docSnap.exists() ? docSnap.data() : {};
+            div.innerHTML = "";
+            itensEnxoval.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'checklist-item';
+                itemDiv.innerHTML = `<input type="checkbox" ${data[item] ? 'checked' : ''} onchange="saveItem('${uid}','${item}',this.checked)"><span>${item}</span>`;
+                div.appendChild(itemDiv);
+            });
+        }
+
+        window.saveItem = async (uid, item, status) => { await setDoc(doc(db, "checklists", uid), { [item]: status }, { merge: true }); };
+
+        // TIMER
+        setInterval(() => {
+            const diff = new Date("July 01, 2026").getTime() - new Date().getTime();
+            document.getElementById('days-timer').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+        }, 1000);
+    </script>
+</body>
+</html>
