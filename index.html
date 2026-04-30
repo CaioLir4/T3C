@@ -1,0 +1,445 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POLO CASTANHAL T3 - Gestão CBMPA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bombeiro-vermelho: #ce2029;
+            --bombeiro-dourado: #f1c40f;
+            --bg-dark: #020617;
+            --card-dark: #0f172a;
+            --input-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --accent-gradient: linear-gradient(135deg, #ce2029 0%, #7f1d1d 100%);
+            --glow: 0 0 15px rgba(206, 32, 41, 0.4);
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Urbanist', sans-serif;
+            margin: 0; padding: 0;
+            line-height: 1.6;
+        }
+
+        nav {
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex; flex-direction: column; align-items: center;
+            padding: 15px 20px; position: fixed; top: 0; width: 100%; z-index: 1000;
+        }
+        @media (min-width: 768px) { nav { flex-direction: row; justify-content: space-between; padding: 20px 60px; } }
+
+        .logo { font-weight: 800; font-size: 22px; color: var(--text-main); display: flex; align-items: center; gap: 12px; letter-spacing: 1px; }
+        .logo i { color: var(--bombeiro-vermelho); font-size: 24px; filter: drop-shadow(var(--glow)); }
+
+        .nav-links { display: flex; gap: 25px; margin-top: 15px; }
+        @media (min-width: 768px) { .nav-links { margin-top: 0; } }
+        
+        .nav-links a { color: var(--text-dim); cursor: pointer; font-weight: 700; text-decoration: none; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; padding: 8px 0; }
+        .nav-links a.active, .nav-links a:hover { color: var(--bombeiro-vermelho); border-bottom: 2px solid var(--bombeiro-vermelho); }
+
+        .slide-container { display: none; min-height: 100vh; padding: 140px 20px 80px; max-width: 1100px; margin: 0 auto; width: 100%; animation: fadeIn 0.6s ease-out; }
+        .slide-container.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card { background: var(--card-dark); border-radius: 28px; padding: 35px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+
+        .auth-container { max-width: 420px; margin: 0 auto; }
+        .input-group { position: relative; margin-bottom: 20px; }
+        .input-group i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 18px; }
+        .input-field { width: 100%; background: var(--input-bg); border: 2px solid transparent; border-radius: 18px; padding: 18px 20px 18px 55px; color: white; font-size: 16px; font-family: 'Urbanist', sans-serif; font-weight: 500; }
+        .input-field:focus { outline: none; border-color: var(--bombeiro-vermelho); background: var(--bg-dark); box-shadow: var(--glow); }
+
+        .btn-primary { background: var(--accent-gradient); color: white; border: none; padding: 18px; border-radius: 18px; font-weight: 800; cursor: pointer; font-size: 16px; width: 100%; box-shadow: 0 10px 20px rgba(206, 32, 41, 0.3); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(206, 32, 41, 0.4); }
+        
+        .category-header { background: rgba(206, 32, 41, 0.05); border-left: 5px solid var(--bombeiro-vermelho); padding: 15px 25px; margin: 40px 0 20px; border-radius: 0 15px 15px 0; }
+        .category-header h3 { margin: 0; color: var(--bombeiro-dourado); font-size: 17px; text-transform: uppercase; letter-spacing: 1px; }
+
+        .checklist-item { background: rgba(255,255,255,0.03); border-radius: 20px; padding: 20px; margin-bottom: 15px; display: flex; align-items: center; gap: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .checkbox-custom { width: 28px; height: 28px; cursor: pointer; accent-color: var(--bombeiro-vermelho); flex-shrink: 0; }
+        .item-content { flex-grow: 1; }
+        .item-title { display: block; font-weight: 700; color: var(--text-main); font-size: 16px; margin-bottom: 5px; }
+        .item-details { display: flex; gap: 15px; color: var(--text-dim); font-size: 13px; font-weight: 600; }
+        .badge { background: rgba(241, 196, 15, 0.15); color: var(--bombeiro-dourado); padding: 2px 10px; border-radius: 6px; }
+
+        .alert { padding: 18px; border-radius: 18px; margin-bottom: 25px; font-weight: 700; font-size: 14px; text-align: center; display: none; }
+        .alert-error { background: rgba(239, 68, 68, 0.1); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .alert-success { background: rgba(34, 197, 94, 0.1); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.3); }
+
+        .admin-only { display: none; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo"><i class="fa-solid fa-shield-halved"></i> POLO CASTANHAL T3</div>
+        <div class="nav-links">
+            <a onclick="showSlide('home')" id="link-home" class="active">Painel</a>
+            <a onclick="showSlide('taf')" id="link-taf">Índices TAF</a>
+            <a onclick="showSlide('lista')" id="link-lista">Efetivo</a>
+            <a onclick="showSlide('checklist')" id="link-checklist">Enxoval</a>
+            <a onclick="showSlide('admin')" id="link-admin" class="admin-only">Gestão</a>
+        </div>
+    </nav>
+
+    <div id="slide-home" class="slide-container active">
+        <div class="card" style="background: var(--accent-gradient); text-align: center; border: none;">
+            <h1 id="days-timer" style="font-size: 80px; margin: 0; font-weight: 900; letter-spacing: -2px;">000</h1>
+            <p style="text-transform: uppercase; font-weight: 800; letter-spacing: 4px; opacity: 0.9; margin-top: -10px;">Dias para a Apresentação</p>
+        </div>
+        <div class="card">
+            <h2 style="font-weight: 800; color: var(--bombeiro-dourado); margin-top: 0;">Informativo Oficial</h2>
+            <p>O checklist abaixo foi atualizado conforme o novo documento oficial (ENXOVAL CFP BM 2026.pdf), contendo todos os itens e quantidades exigidas para cada etapa.</p>
+        </div>
+    </div>
+
+    
+    <!-- TABELAS TAF COMPLETAS -->
+    <div id="slide-taf" class="slide-container">
+        <div class="card">
+            <h2 style="color: var(--bombeiro-dourado); text-align: center; margin-bottom: 25px;">
+                <i class="fa-solid fa-person-running"></i> Tabela de Rendimento TAF
+            </h2>
+            
+            <div style="display: flex; gap: 10px; margin-bottom: 25px; justify-content: center;">
+                <button onclick="switchTaf('masc')" id="btn-taf-masc" class="btn-primary" style="width: auto; padding: 10px 25px;">Masculino</button>
+                <button onclick="switchTaf('fem')" id="btn-taf-fem" class="btn-primary" style="width: auto; padding: 10px 25px; opacity: 0.5;">Feminino</button>
+            </div>
+
+            <div class="table-wrapper" style="overflow-x: auto; border-radius: 20px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);">
+                <table id="taf-table" style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                    <thead>
+                        <tr style="background: rgba(206, 32, 41, 0.2); color: var(--bombeiro-dourado);">
+                            <th style="padding: 15px; border-bottom: 2px solid var(--bombeiro-vermelho);">Nota</th>
+                            <th style="padding: 15px; border-bottom: 2px solid var(--bombeiro-vermelho);">C. 12min</th>
+                            <th style="padding: 15px; border-bottom: 2px solid var(--bombeiro-vermelho);">C. 50m</th>
+                            <th style="padding: 15px; border-bottom: 2px solid var(--bombeiro-vermelho);">Abd</th>
+                            <th style="padding: 15px; border-bottom: 2px solid var(--bombeiro-vermelho);">Flex</th>
+                            <th id="th-barra" style="padding: 15px; border-bottom: 2px solid var(--bombeiro-vermelho);">Barra</th>
+                            <th style="padding: 15px; border-bottom: 2px solid var(--bombeiro-vermelho);">Nat</th>
+                        </tr>
+                    </thead>
+                    <tbody id="taf-tbody" style="text-align: center;">
+                        <!-- Gerado por JS -->
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size: 11px; color: var(--text-dim); text-align: center; margin-top: 15px; font-style: italic;">
+                * Dados baseados na tabela de pontuação oficial CFP 2026.
+            </p>
+        </div>
+    </div>
+
+    <div id="slide-lista" class="slide-container">
+        <div class="card">
+            <h2 style="margin-bottom: 30px;">Lista de Antiguidade</h2>
+            <input type="text" id="searchAlunos" class="input-field" placeholder="Procurar aluno..." style="padding-left: 20px; margin-bottom: 25px;">
+            <div style="overflow-x: auto; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: rgba(255,255,255,0.03); color: var(--bombeiro-dourado); font-size: 13px; text-transform: uppercase;">
+                            <th style="padding: 20px; text-align: left;">Nº Ordem</th>
+                            <th style="padding: 20px; text-align: left;">Nome do Candidato</th>
+                            <th style="padding: 20px; text-align: left;">Posição Geral</th>
+                            <th class="admin-only" style="padding: 20px; text-align: left;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="alunoTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="slide-checklist" class="slide-container">
+        <div id="auth-area" class="auth-container">
+            <div class="card">
+                <h2 style="text-align: center; margin-bottom: 35px; font-weight: 800;">Acesso ao Enxoval</h2>
+                <div id="auth-alert" class="alert"></div>
+                <div class="input-group">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" id="userEmail" class="input-field" placeholder="Seu e-mail">
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="userPass" class="input-field" placeholder="Sua senha">
+                </div>
+                <button onclick="handleAuth('login')" class="btn-primary">ACESSAR PAINEL</button>
+                <div style="text-align: center; margin-top: 25px;">
+                    <a onclick="handleAuth('signup')" style="color: var(--bombeiro-dourado); cursor: pointer; font-weight: 800;">Criar Conta</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="checklist-area" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <h2 style="margin:0">Meu Enxoval (CFP BM 2026)</h2>
+                <button onclick="logout()" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; padding: 10px 20px; border-radius: 12px; cursor: pointer;">SAIR</button>
+            </div>
+            <div id="items-list"></div>
+        </div>
+    </div>
+
+    <div id="slide-admin" class="slide-container">
+        <div class="card" style="max-width: 600px; margin: 0 auto;">
+            <h2 style="margin-top:0">Gestão do Efetivo</h2>
+            <input type="text" id="admNome" class="input-field" placeholder="Nome Completo" style="padding-left: 20px; margin-bottom: 15px;">
+            <input type="number" id="admPos" class="input-field" placeholder="Posição Geral" style="padding-left: 20px; margin-bottom: 15px;">
+            <button onclick="adicionarAluno()" class="btn-primary">ADICIONAR NA LISTA</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, addDoc, deleteDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDym9reAAHi0v9CpxXhHo4FoWAv6etmsXU",
+            authDomain: "cbmt3castanhal.firebaseapp.com",
+            projectId: "cbmt3castanhal",
+            storageBucket: "cbmt3castanhal.firebasestorage.app",
+            messagingSenderId: "923532708352",
+            appId: "1:923532708352:web:897d4f2f7208460290a6e5"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const ADMIN_EMAIL = "caiodevanalista@gmail.com";
+
+        const NOVO_ENXOVAL = [
+            { cat: "SEMANA ADMINISTRATIVA (APRESENTAÇÃO)", items: [
+                { id: "sa1", d: "Calça jeans azul escuro", m: 2, r: 3 },
+                { id: "sa2", d: "Camisa branca", m: 2, r: 4 },
+                { id: "sa3", d: "Cinto preto", m: 1, r: 1 },
+                { id: "sa4", d: "Fivela preta", m: 1, r: 1 },
+                { id: "sa5", d: "Ténis preto", m: 1, r: 2 },
+                { id: "sa6", d: "Meia branca", m: 2, r: 8 }
+            ]},
+            { cat: "UNIFORME DE ADAPTAÇÃO / TRÂNSITO (6ºD)", items: [
+                { id: "ut1", d: "Calça jeans azul escuro", m: 2, r: 3 },
+                { id: "ut2", d: "Camisa branca", m: 2, r: 4 },
+                { id: "ut3", d: "Cinto preto", m: 1, r: 1 },
+                { id: "ut4", d: "Fivela preta", m: 1, r: 1 },
+                { id: "ut5", d: "Ténis preto", m: 1, r: 2 },
+                { id: "ut6", d: "Meia branca", m: 2, r: 8 }
+            ]},
+            { cat: "UNIFORME DE ADAPTAÇÃO / INTERNO (6ºC)", items: [
+                { id: "ui1", d: "Gorro com pala cáqui", m: 1, r: 2 },
+                { id: "ui2", d: "Camisa vermelha com brasão CBMPA (sem ID)", m: 3, r: 5 },
+                { id: "ui3", d: "Calça jeans azul índigo", m: 2, r: 3 },
+                { id: "ui4", d: "Cinto cadarço vermelho (fivela dourada lisa)", m: 1, r: 1 },
+                { id: "ui5", d: "Meia esportiva branca, cano médio", m: 3, r: 8 },
+                { id: "ui6", d: "Ténis preto", m: 1, r: 2 },
+                { id: "ui7_fem", d: "Top preto (efetivo feminino)", m: 3, r: 5 }
+            ]},
+            { cat: "EDUCAÇÃO FÍSICA MILITAR (5ºA)", items: [
+                { id: "ef1", d: "Camisa dry fit branca com brasão", m: 3, r: 5 },
+                { id: "ef2", d: "Short de educação física vermelho", m: 3, r: 5 },
+                { id: "ef3", d: "Sandália de dedo preta", m: 1, r: 1 },
+                { id: "ef4_mas", d: "Sunga preta (efetivo masculino)", m: 2, r: 3 },
+                { id: "ef5_fem", d: "Maiô preto (efetivo feminino)", m: 2, r: 3 },
+                { id: "ef6_fem", d: "Bermuda feminina preta (efetivo feminino)", m: 2, r: 3 },
+                { id: "ef7", d: "Touca de natação preta", m: 1, r: 1 }
+            ]},
+            { cat: "CAMA E BANHO", items: [
+                { id: "cb1", d: "Lençol de cama branco (Oxford liso)", m: 1, r: 1 },
+                { id: "cb2", d: "Cobertor de colchão branco com elástico", m: 1, r: 1 },
+                { id: "cb3", d: "Toalha de banho vermelha", m: 2, r: 2 },
+                { id: "cb4", d: "Toalha de rosto vermelha", m: 2, r: 2 }
+            ]},
+            { cat: "KITS DE HIGIENE E MANUTENÇÃO", items: [
+                { id: "kh1", d: "Kit Higiene (Creme, escova, fio, sabonete, desodorante, cortador, protetor)", m: 1, r: 1 },
+                { id: "kh2", d: "Kit Manutenção (Ferro, agulha, linha, graxa, escova sapato)", m: 1, r: 1 },
+                { id: "kh3_fem", d: "Kit Feminino (Gel, redinha, grampos)", m: 1, r: 1 }
+            ]},
+            { cat: "KIT OPERACIONAL", items: [
+                { id: "ko1", d: "Bolsa preta mochila mín 30L (Rec 55L)", m: 1, r: 1 },
+                { id: "ko2", d: "Cantil preto 1L com porta cantil", m: 1, r: 1 },
+                { id: "ko3", d: "6m Cabo da vida laranja (12mm)", m: 1, r: 1 },
+                { id: "ko4", d: "Cinto N.A vermelho com ilhós pretos", m: 1, r: 1 },
+                { id: "ko5", d: "Lanterna pequena de mão", m: 1, r: 1 }
+            ]},
+            { cat: "MATERIAL ESCREVENTE", items: [
+                { id: "me1", d: "Bloco de anotações de bolso", m: 1, r: 1 },
+                { id: "me2", d: "Canetas esferográficas", m: 4, r: 4 },
+                { id: "me3", d: "Lápis (2x) e Borracha (1x)", m: 1, r: 1 },
+                { id: "me4", d: "Caderno vermelho encapado (Brasão CFAE)", m: 2, r: 2 }
+            ]},
+            { cat: "AULA INAUGURAL (SOCIAL)", items: [
+                { id: "soc1", d: "Terno/Blazer preto liso", m: 1, r: 1 },
+                { id: "soc2", d: "Camisa social branca", m: 1, r: 1 },
+                { id: "soc3", d: "Gravata vertical vermelha (Laço p/ Fem)", m: 1, r: 1 },
+                { id: "soc4", d: "Calça preta social lisa", m: 1, r: 1 },
+                { id: "soc5", d: "Cinto social preto", m: 1, r: 1 },
+                { id: "soc6", d: "Sapato social preto", m: 1, r: 1 },
+                { id: "soc7", d: "Meia social preta", m: 1, r: 1 }
+            ]}
+        ];
+
+        window.showSlide = (id) => {
+            document.querySelectorAll('.slide-container').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            document.getElementById('slide-' + id).classList.add('active');
+            document.getElementById('link-' + id).classList.add('active');
+            window.scrollTo(0,0);
+        };
+
+        const showAlert = (m, t) => {
+            const el = document.getElementById('auth-alert');
+            el.innerText = m; el.className = `alert alert-${t === 'error' ? 'error' : 'success'}`;
+            el.style.display = 'block'; setTimeout(() => el.style.display = 'none', 6000);
+        };
+
+        window.handleAuth = async (type) => {
+            const e = document.getElementById('userEmail').value;
+            const p = document.getElementById('userPass').value;
+            if(!e || !p) return showAlert("Preencha todos os campos.", "error");
+            try {
+                if(type === 'signup') {
+                    await createUserWithEmailAndPassword(auth, e, p);
+                    showAlert("Conta criada!", "success");
+                } else {
+                    await signInWithEmailAndPassword(auth, e, p);
+                }
+            } catch (err) { showAlert("Erro de acesso.", "error"); }
+        };
+
+        window.logout = () => signOut(auth);
+
+        onAuthStateChanged(auth, user => {
+            const isAdm = user && user.email === ADMIN_EMAIL;
+            document.querySelectorAll('.admin-only').forEach(el => el.style.display = isAdm ? 'table-cell' : 'none');
+            document.getElementById('link-admin').style.display = isAdm ? 'block' : 'none';
+            if(user) {
+                document.getElementById('auth-area').style.display = 'none';
+                document.getElementById('checklist-area').style.display = 'block';
+                loadChecklist(user.uid);
+            } else {
+                document.getElementById('auth-area').style.display = 'block';
+                document.getElementById('checklist-area').style.display = 'none';
+            }
+        });
+
+        onSnapshot(query(collection(db, "alunos_lista"), orderBy("posicao", "asc")), snap => {
+            const body = document.getElementById('alunoTableBody');
+            body.innerHTML = ""; let i = 1;
+            snap.forEach(d => {
+                const a = d.data(); const isA = auth.currentUser?.email === ADMIN_EMAIL;
+                body.innerHTML += `<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 20px;"><b>${i}º</b></td>
+                    <td style="padding: 20px;">${a.nome}</td>
+                    <td style="padding: 20px; color:var(--bombeiro-dourado);">${a.posicao}º</td>
+                    <td class="admin-only" style="display:${isA?'table-cell':'none'}; padding: 20px;">
+                        <button onclick="removerAluno('${d.id}')" style="background:#ef4444; border:none; color:white; padding:5px 10px; border-radius:8px; cursor:pointer;">EXCLUIR</button>
+                    </td>
+                </tr>`; i++;
+            });
+        });
+
+        window.adicionarAluno = async () => {
+            const n = document.getElementById('admNome').value; const p = parseInt(document.getElementById('admPos').value);
+            if(n && p) { await addDoc(collection(db, "alunos_lista"), { nome: n, posicao: p }); document.getElementById('admNome').value = ""; document.getElementById('admPos').value = ""; }
+        };
+
+        window.removerAluno = async (id) => { if(confirm("Remover?")) await deleteDoc(doc(db, "alunos_lista", id)); };
+
+        async function loadChecklist(uid) {
+            const container = document.getElementById('items-list');
+            const snap = await getDoc(doc(db, "checklists", uid));
+            const saved = snap.exists() ? snap.data() : {};
+            container.innerHTML = "";
+
+            NOVO_ENXOVAL.forEach(cat => {
+                const h = document.createElement('div');
+                h.className = 'category-header';
+                h.innerHTML = `<h3>${cat.cat}</h3>`;
+                container.appendChild(h);
+
+                cat.items.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'checklist-item';
+                    itemDiv.innerHTML = `
+                        <input type="checkbox" class="checkbox-custom" ${saved[item.id] ? 'checked' : ''} onchange="saveItem('${uid}','${item.id}',this.checked)">
+                        <div class="item-content">
+                            <span class="item-title">${item.d}</span>
+                            <div class="item-details">
+                                <span>Mín: <span class="badge">${item.m}</span></span>
+                                <span>Rec: <span class="badge">${item.r}</span></span>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(itemDiv);
+                });
+            });
+        }
+
+        window.saveItem = async (uid, iid, s) => { await setDoc(doc(db, "checklists", uid), { [iid]: s }, { merge: true }); };
+
+        setInterval(() => {
+            const diff = new Date("July 01, 2026").getTime() - new Date().getTime();
+            document.getElementById('days-timer').innerText = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24))).toString().padStart(3, '0');
+        }, 1000);
+    
+        const TAF_MASC = [{"nota": 10, "corrida12": 3200, "corrida50": 6.8, "abdominal": 54, "flexao": 48, "barra": 16, "natacao": 35}, {"nota": 9.75, "corrida12": 3150, "corrida50": 6.9, "abdominal": 53, "flexao": 47, "barra": null, "natacao": 36}, {"nota": 9.5, "corrida12": 3100, "corrida50": 7.0, "abdominal": 52, "flexao": 46, "barra": 15, "natacao": 37}, {"nota": 9.25, "corrida12": 3050, "corrida50": 7.1, "abdominal": 51, "flexao": 45, "barra": null, "natacao": 38}, {"nota": 9, "corrida12": 3000, "corrida50": 7.2, "abdominal": 50, "flexao": 44, "barra": 14, "natacao": 39}, {"nota": 8.75, "corrida12": 2950, "corrida50": 7.3, "abdominal": 49, "flexao": 43, "barra": null, "natacao": 40}, {"nota": 8.5, "corrida12": 2900, "corrida50": 7.4, "abdominal": 48, "flexao": 42, "barra": 13, "natacao": 41}, {"nota": 8.25, "corrida12": 2850, "corrida50": 7.5, "abdominal": 47, "flexao": 41, "barra": null, "natacao": 42}, {"nota": 8, "corrida12": 2800, "corrida50": 7.6, "abdominal": 46, "flexao": 40, "barra": 12, "natacao": 43}, {"nota": 7.75, "corrida12": 2750, "corrida50": 7.7, "abdominal": 45, "flexao": 39, "barra": null, "natacao": 44}, {"nota": 7.5, "corrida12": 2700, "corrida50": 7.8, "abdominal": 44, "flexao": 38, "barra": 11, "natacao": 45}, {"nota": 7.25, "corrida12": 2650, "corrida50": 7.9, "abdominal": 43, "flexao": 37, "barra": null, "natacao": 46}, {"nota": 7, "corrida12": 2600, "corrida50": 8.0, "abdominal": 42, "flexao": 36, "barra": 10, "natacao": 47}, {"nota": 6.75, "corrida12": 2550, "corrida50": 8.1, "abdominal": 41, "flexao": 35, "barra": null, "natacao": 48}, {"nota": 6.5, "corrida12": 2500, "corrida50": 8.2, "abdominal": 40, "flexao": 34, "barra": 9, "natacao": 49}, {"nota": 6.25, "corrida12": 2450, "corrida50": 8.3, "abdominal": 39, "flexao": 33, "barra": null, "natacao": 50}, {"nota": 6, "corrida12": 2400, "corrida50": 8.4, "abdominal": 38, "flexao": 32, "barra": 8, "natacao": 51}, {"nota": 5.75, "corrida12": 2350, "corrida50": 8.5, "abdominal": 37, "flexao": 31, "barra": null, "natacao": 52}, {"nota": 5.5, "corrida12": 2300, "corrida50": 8.6, "abdominal": 36, "flexao": 30, "barra": 7, "natacao": 53}, {"nota": 5.25, "corrida12": 2250, "corrida50": 8.7, "abdominal": 35, "flexao": 29, "barra": null, "natacao": 54}, {"nota": 5, "corrida12": 2200, "corrida50": 8.8, "abdominal": 34, "flexao": 28, "barra": 6, "natacao": 55}, {"nota": 4.75, "corrida12": 2150, "corrida50": 8.9, "abdominal": 33, "flexao": 27, "barra": null, "natacao": 56}, {"nota": 4.5, "corrida12": 2100, "corrida50": 9.0, "abdominal": 32, "flexao": 26, "barra": 5, "natacao": 57}, {"nota": 4.25, "corrida12": 2050, "corrida50": 9.1, "abdominal": 31, "flexao": 25, "barra": null, "natacao": 58}, {"nota": 4, "corrida12": 2000, "corrida50": 9.2, "abdominal": 30, "flexao": 24, "barra": 4, "natacao": 59}, {"nota": 3.75, "corrida12": 1950, "corrida50": 9.3, "abdominal": 29, "flexao": 23, "barra": null, "natacao": 60}, {"nota": 3.5, "corrida12": 1900, "corrida50": 9.4, "abdominal": 28, "flexao": 22, "barra": 3, "natacao": 61}, {"nota": 3.25, "corrida12": 1850, "corrida50": 9.5, "abdominal": 27, "flexao": 21, "barra": null, "natacao": 62}, {"nota": 3, "corrida12": 1800, "corrida50": 9.6, "abdominal": 26, "flexao": 20, "barra": null, "natacao": 63}, {"nota": 2.75, "corrida12": 1750, "corrida50": 9.7, "abdominal": 25, "flexao": 19, "barra": null, "natacao": 64}, {"nota": 2.5, "corrida12": 1700, "corrida50": 9.8, "abdominal": 24, "flexao": 18, "barra": null, "natacao": 65}, {"nota": 2.25, "corrida12": 1650, "corrida50": 9.9, "abdominal": 23, "flexao": 17, "barra": null, "natacao": 66}, {"nota": 2, "corrida12": 1600, "corrida50": 10.0, "abdominal": 22, "flexao": 16, "barra": null, "natacao": 67}, {"nota": 1.75, "corrida12": 1550, "corrida50": 10.1, "abdominal": 21, "flexao": 15, "barra": null, "natacao": 68}, {"nota": 1.5, "corrida12": 1500, "corrida50": 10.2, "abdominal": 20, "flexao": 14, "barra": null, "natacao": 69}, {"nota": 1.25, "corrida12": 1450, "corrida50": 10.3, "abdominal": 19, "flexao": 13, "barra": null, "natacao": 70}, {"nota": 1, "corrida12": 1400, "corrida50": 10.4, "abdominal": 18, "flexao": 12, "barra": null, "natacao": 71}, {"nota": 0.75, "corrida12": 1350, "corrida50": 10.5, "abdominal": 17, "flexao": 11, "barra": null, "natacao": 72}, {"nota": 0.5, "corrida12": 1300, "corrida50": 10.6, "abdominal": 16, "flexao": 10, "barra": null, "natacao": 73}, {"nota": 0.25, "corrida12": 1250, "corrida50": 10.7, "abdominal": 15, "flexao": 9, "barra": null, "natacao": 74}, {"nota": 0, "corrida12": 1200, "corrida50": 10.8, "abdominal": 14, "flexao": 8, "barra": "<3", "natacao": 75}];
+        const TAF_FEM = [{"nota": 10, "corrida12": 2800, "corrida50": 7.8, "abdominal": 46, "flexao": 22, "barra": "+28s", "natacao": 40}, {"nota": 9.75, "corrida12": 2750, "corrida50": 7.9, "abdominal": 45, "flexao": 21, "barra": null, "natacao": 41}, {"nota": 9.5, "corrida12": 2700, "corrida50": 8.0, "abdominal": 44, "flexao": 20, "barra": "26-27s", "natacao": 42}, {"nota": 9.25, "corrida12": 2650, "corrida50": 8.1, "abdominal": 43, "flexao": 19, "barra": null, "natacao": 43}, {"nota": 9, "corrida12": 2600, "corrida50": 8.2, "abdominal": 42, "flexao": 18, "barra": "24-25s", "natacao": 44}, {"nota": 8.75, "corrida12": 2550, "corrida50": 8.3, "abdominal": 41, "flexao": 17, "barra": null, "natacao": 45}, {"nota": 8.5, "corrida12": 2500, "corrida50": 8.4, "abdominal": 40, "flexao": 16, "barra": "22-23s", "natacao": 46}, {"nota": 8.25, "corrida12": 2450, "corrida50": 8.5, "abdominal": 39, "flexao": 15, "barra": null, "natacao": 47}, {"nota": 8, "corrida12": 2400, "corrida50": 8.6, "abdominal": 38, "flexao": 14, "barra": "20-21s", "natacao": 48}, {"nota": 7.75, "corrida12": 2350, "corrida50": 8.7, "abdominal": 37, "flexao": 13, "barra": null, "natacao": 49}, {"nota": 7.5, "corrida12": 2300, "corrida50": 8.8, "abdominal": 36, "flexao": 12, "barra": "18-19s", "natacao": 50}, {"nota": 7.25, "corrida12": 2250, "corrida50": 8.9, "abdominal": 35, "flexao": 11, "barra": null, "natacao": 51}, {"nota": 7, "corrida12": 2200, "corrida50": 9.0, "abdominal": 34, "flexao": 10, "barra": "16-17s", "natacao": 52}, {"nota": 6.75, "corrida12": 2150, "corrida50": 9.1, "abdominal": 33, "flexao": 9, "barra": null, "natacao": 53}, {"nota": 6.5, "corrida12": 2100, "corrida50": 9.2, "abdominal": 32, "flexao": 8, "barra": "14-15s", "natacao": 54}, {"nota": 6.25, "corrida12": 2050, "corrida50": 9.3, "abdominal": 31, "flexao": 7, "barra": null, "natacao": 55}, {"nota": 6, "corrida12": 2000, "corrida50": 9.4, "abdominal": 30, "flexao": 6, "barra": "12-13s", "natacao": 56}, {"nota": 5.75, "corrida12": 1950, "corrida50": 9.5, "abdominal": 29, "flexao": null, "barra": null, "natacao": 57}, {"nota": 5.5, "corrida12": 1900, "corrida50": 9.6, "abdominal": 28, "flexao": null, "barra": "10-11s", "natacao": 58}, {"nota": 5.25, "corrida12": 1850, "corrida50": 9.7, "abdominal": 27, "flexao": null, "barra": null, "natacao": 59}, {"nota": 5, "corrida12": 1800, "corrida50": 9.8, "abdominal": 26, "flexao": 5, "barra": "8-9s", "natacao": 60}, {"nota": 4.75, "corrida12": 1750, "corrida50": 9.9, "abdominal": 25, "flexao": null, "barra": null, "natacao": 61}, {"nota": 4.5, "corrida12": 1700, "corrida50": 10.0, "abdominal": 24, "flexao": null, "barra": "6-7s", "natacao": 62}, {"nota": 4.25, "corrida12": 1650, "corrida50": 10.1, "abdominal": 23, "flexao": null, "barra": null, "natacao": 63}, {"nota": 4, "corrida12": 1600, "corrida50": 10.2, "abdominal": 22, "flexao": 4, "barra": "4-5s", "natacao": 64}, {"nota": 3.75, "corrida12": 1550, "corrida50": 10.3, "abdominal": 21, "flexao": null, "barra": null, "natacao": 65}, {"nota": 3.5, "corrida12": 1500, "corrida50": 10.4, "abdominal": 20, "flexao": null, "barra": "3s", "natacao": 66}, {"nota": 3.25, "corrida12": 1450, "corrida50": 10.5, "abdominal": 19, "flexao": null, "barra": null, "natacao": 67}, {"nota": 3, "corrida12": 1400, "corrida50": 10.6, "abdominal": 18, "flexao": 3, "barra": null, "natacao": 68}, {"nota": 2.75, "corrida12": 1350, "corrida50": 10.7, "abdominal": 17, "flexao": null, "barra": null, "natacao": 69}, {"nota": 2.5, "corrida12": 1300, "corrida50": 10.8, "abdominal": 16, "flexao": null, "barra": null, "natacao": 70}, {"nota": 2.25, "corrida12": 1250, "corrida50": 10.9, "abdominal": 15, "flexao": null, "barra": null, "natacao": 71}, {"nota": 2, "corrida12": 1200, "corrida50": 11.0, "abdominal": 14, "flexao": 2, "barra": null, "natacao": 72}, {"nota": 1.75, "corrida12": 1150, "corrida50": 11.1, "abdominal": 13, "flexao": null, "barra": null, "natacao": 73}, {"nota": 1.5, "corrida12": 1100, "corrida50": 11.2, "abdominal": 12, "flexao": null, "barra": null, "natacao": 74}];
+
+        window.switchTaf = (gender) => {
+            const tbody = document.getElementById('taf-tbody');
+            const thBarra = document.getElementById('th-barra');
+            const data = gender === 'masc' ? TAF_MASC : TAF_FEM;
+            
+            document.getElementById('btn-taf-masc').style.opacity = gender === 'masc' ? '1' : '0.5';
+            document.getElementById('btn-taf-fem').style.opacity = gender === 'fem' ? '1' : '0.5';
+            thBarra.innerText = gender === 'masc' ? 'Barra' : 'Barra (Sus)';
+
+            tbody.innerHTML = data.map(row => {
+                // Destacar notas azuis (>= 5) e vermelhas (< 5)
+                const notaColor = row.nota >= 5 ? 'var(--bombeiro-dourado)' : '#ef4444';
+                return `
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03); background: ${row.nota % 1 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent'}">
+                        <td style="padding: 12px; font-weight: 800; color: ${notaColor};">${row.nota}</td>
+                        <td>${row.corrida12}m</td>
+                        <td>${row.corrida50}s</td>
+                        <td>${row.abdominal}</td>
+                        <td>${row.flexao || '-'}</td>
+                        <td>${row.barra || '-'}</td>
+                        <td>${row.natacao}s</td>
+                    </tr>
+                `;
+            }).join('');
+        };
+        
+        switchTaf('masc');
+
+    
+        // CORREÇÃO DA BARRA DE PESQUISA
+        const inputBusca = document.getElementById('searchAlunos');
+        if (inputBusca) {
+            inputBusca.addEventListener('input', (e) => {
+                const termo = e.target.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                const linhas = document.querySelectorAll('#alunoTableBody tr');
+                
+                linhas.forEach(linha => {
+                    const nome = linha.innerText.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                    linha.style.display = nome.includes(termo) ? '' : 'none';
+                });
+            });
+        }
+
+    </script>
+</body>
+</html>
