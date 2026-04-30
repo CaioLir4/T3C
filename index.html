@@ -32,7 +32,6 @@
             line-height: 1.6;
         }
 
-        /* NAVEGAÇÃO */
         nav {
             background: rgba(2, 6, 23, 0.8);
             backdrop-filter: blur(12px);
@@ -42,99 +41,44 @@
         }
         @media (min-width: 768px) { nav { flex-direction: row; justify-content: space-between; padding: 20px 60px; } }
 
-        .logo { 
-            font-weight: 800; font-size: 22px; color: var(--text-main); 
-            display: flex; align-items: center; gap: 12px; letter-spacing: 1px;
-        }
+        .logo { font-weight: 800; font-size: 22px; color: var(--text-main); display: flex; align-items: center; gap: 12px; letter-spacing: 1px; }
         .logo i { color: var(--bombeiro-vermelho); font-size: 24px; filter: drop-shadow(var(--glow)); }
 
         .nav-links { display: flex; gap: 25px; margin-top: 15px; }
         @media (min-width: 768px) { .nav-links { margin-top: 0; } }
         
-        .nav-links a {
-            color: var(--text-dim); cursor: pointer; font-weight: 700; text-decoration: none;
-            font-size: 13px; text-transform: uppercase; letter-spacing: 1px; padding: 8px 0;
-        }
+        .nav-links a { color: var(--text-dim); cursor: pointer; font-weight: 700; text-decoration: none; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; padding: 8px 0; }
         .nav-links a.active, .nav-links a:hover { color: var(--bombeiro-vermelho); border-bottom: 2px solid var(--bombeiro-vermelho); }
 
-        /* CONTAINERS */
-        .slide-container {
-            display: none; min-height: 100vh;
-            padding: 140px 20px 80px;
-            max-width: 1100px; margin: 0 auto; width: 100%;
-            animation: fadeIn 0.6s ease-out;
-        }
+        .slide-container { display: none; min-height: 100vh; padding: 140px 20px 80px; max-width: 1100px; margin: 0 auto; width: 100%; animation: fadeIn 0.6s ease-out; }
         .slide-container.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card {
-            background: var(--card-dark); border-radius: 28px; padding: 35px;
-            border: 1px solid rgba(255,255,255,0.06); margin-bottom: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
+        .card { background: var(--card-dark); border-radius: 28px; padding: 35px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
 
-        /* LOGIN STYLE - REFINED */
         .auth-container { max-width: 420px; margin: 0 auto; }
         .input-group { position: relative; margin-bottom: 20px; }
-        .input-group i { 
-            position: absolute; left: 20px; top: 50%; transform: translateY(-50%); 
-            color: var(--text-dim); font-size: 18px;
-        }
-        .input-field {
-            width: 100%; background: var(--input-bg); border: 2px solid transparent;
-            border-radius: 18px; padding: 18px 20px 18px 55px; color: white;
-            font-size: 16px; font-family: 'Urbanist', sans-serif; font-weight: 500;
-        }
-        .input-field:focus {
-            outline: none; border-color: var(--bombeiro-vermelho);
-            background: var(--bg-dark); box-shadow: var(--glow);
-        }
-        .input-field::placeholder { color: #64748b; }
+        .input-group i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 18px; }
+        .input-field { width: 100%; background: var(--input-bg); border: 2px solid transparent; border-radius: 18px; padding: 18px 20px 18px 55px; color: white; font-size: 16px; font-family: 'Urbanist', sans-serif; font-weight: 500; }
+        .input-field:focus { outline: none; border-color: var(--bombeiro-vermelho); background: var(--bg-dark); box-shadow: var(--glow); }
 
-        /* BOTÕES */
-        .btn-primary {
-            background: var(--accent-gradient); color: white; border: none; padding: 18px;
-            border-radius: 18px; font-weight: 800; cursor: pointer; font-size: 16px;
-            width: 100%; box-shadow: 0 10px 20px rgba(206, 32, 41, 0.3);
-        }
+        .btn-primary { background: var(--accent-gradient); color: white; border: none; padding: 18px; border-radius: 18px; font-weight: 800; cursor: pointer; font-size: 16px; width: 100%; box-shadow: 0 10px 20px rgba(206, 32, 41, 0.3); }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(206, 32, 41, 0.4); }
-        .btn-primary:active { transform: scale(0.97); }
-
-        /* CHECKLIST */
-        .category-header {
-            background: rgba(206, 32, 41, 0.05); border-left: 5px solid var(--bombeiro-vermelho);
-            padding: 15px 25px; margin: 40px 0 20px; border-radius: 0 15px 15px 0;
-        }
+        
+        .category-header { background: rgba(206, 32, 41, 0.05); border-left: 5px solid var(--bombeiro-vermelho); padding: 15px 25px; margin: 40px 0 20px; border-radius: 0 15px 15px 0; }
         .category-header h3 { margin: 0; color: var(--bombeiro-dourado); font-size: 17px; text-transform: uppercase; letter-spacing: 1px; }
 
-        .checklist-item {
-            background: rgba(255,255,255,0.03); border-radius: 20px; padding: 20px;
-            margin-bottom: 15px; display: flex; align-items: center; gap: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .checklist-item:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
-        
-        .checkbox-custom {
-            width: 28px; height: 28px; cursor: pointer; accent-color: var(--bombeiro-vermelho);
-            flex-shrink: 0;
-        }
-
+        .checklist-item { background: rgba(255,255,255,0.03); border-radius: 20px; padding: 20px; margin-bottom: 15px; display: flex; align-items: center; gap: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .checkbox-custom { width: 28px; height: 28px; cursor: pointer; accent-color: var(--bombeiro-vermelho); flex-shrink: 0; }
         .item-content { flex-grow: 1; }
         .item-title { display: block; font-weight: 700; color: var(--text-main); font-size: 16px; margin-bottom: 5px; }
         .item-details { display: flex; gap: 15px; color: var(--text-dim); font-size: 13px; font-weight: 600; }
         .badge { background: rgba(241, 196, 15, 0.15); color: var(--bombeiro-dourado); padding: 2px 10px; border-radius: 6px; }
 
-        /* ALERTS */
         .alert { padding: 18px; border-radius: 18px; margin-bottom: 25px; font-weight: 700; font-size: 14px; text-align: center; display: none; }
         .alert-error { background: rgba(239, 68, 68, 0.1); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
         .alert-success { background: rgba(34, 197, 94, 0.1); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.3); }
 
-        /* TABELAS */
-        .table-container { overflow-x: auto; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
-        table { width: 100%; border-collapse: collapse; background: rgba(15, 23, 42, 0.3); }
-        th { text-align: left; padding: 20px; background: rgba(255,255,255,0.03); color: var(--bombeiro-dourado); font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
-        td { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 15px; }
-        
         .admin-only { display: none; }
     </style>
 </head>
@@ -150,7 +94,6 @@
         </div>
     </nav>
 
-    <!-- PAINEL PRINCIPAL -->
     <div id="slide-home" class="slide-container active">
         <div class="card" style="background: var(--accent-gradient); text-align: center; border: none;">
             <h1 id="days-timer" style="font-size: 80px; margin: 0; font-weight: 900; letter-spacing: -2px;">000</h1>
@@ -158,26 +101,22 @@
         </div>
         <div class="card">
             <h2 style="font-weight: 800; color: var(--bombeiro-dourado); margin-top: 0;">Informativo Oficial</h2>
-            <p>O checklist abaixo foi extraído diretamente das tabelas do documento de enxoval 2026. Todos os itens repetidos foram mantidos para conferência individual por uniforme.</p>
+            <p>O checklist abaixo foi atualizado conforme o novo documento oficial (ENXOVAL CFP BM 2026.pdf), contendo todos os itens e quantidades exigidas para cada etapa.</p>
         </div>
     </div>
 
-    <!-- LISTA DE ALUNOS -->
     <div id="slide-lista" class="slide-container">
         <div class="card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <h2 style="margin:0">Lista de Antiguidade</h2>
-                <i class="fa-solid fa-users-viewfinder" style="font-size: 24px; color: var(--bombeiro-vermelho)"></i>
-            </div>
+            <h2 style="margin-bottom: 30px;">Lista de Antiguidade</h2>
             <input type="text" id="searchAlunos" class="input-field" placeholder="Procurar aluno..." style="padding-left: 20px; margin-bottom: 25px;">
-            <div class="table-container">
-                <table>
+            <div style="overflow-x: auto; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
+                <table style="width: 100%; border-collapse: collapse;">
                     <thead>
-                        <tr>
-                            <th>Nº Ordem</th>
-                            <th>Nome do Candidato</th>
-                            <th>Posição Geral</th>
-                            <th class="admin-only">Ações</th>
+                        <tr style="background: rgba(255,255,255,0.03); color: var(--bombeiro-dourado); font-size: 13px; text-transform: uppercase;">
+                            <th style="padding: 20px; text-align: left;">Nº Ordem</th>
+                            <th style="padding: 20px; text-align: left;">Nome do Candidato</th>
+                            <th style="padding: 20px; text-align: left;">Posição Geral</th>
+                            <th class="admin-only" style="padding: 20px; text-align: left;">Ações</th>
                         </tr>
                     </thead>
                     <tbody id="alunoTableBody"></tbody>
@@ -186,53 +125,40 @@
         </div>
     </div>
 
-    <!-- CHECKLIST INTEGRAL -->
     <div id="slide-checklist" class="slide-container">
         <div id="auth-area" class="auth-container">
             <div class="card">
                 <h2 style="text-align: center; margin-bottom: 35px; font-weight: 800;">Acesso ao Enxoval</h2>
                 <div id="auth-alert" class="alert"></div>
-                
                 <div class="input-group">
                     <i class="fa-solid fa-envelope"></i>
                     <input type="email" id="userEmail" class="input-field" placeholder="Seu e-mail">
                 </div>
-                
                 <div class="input-group">
                     <i class="fa-solid fa-lock"></i>
                     <input type="password" id="userPass" class="input-field" placeholder="Sua senha">
                 </div>
-
-                <button onclick="handleAuth('login')" class="btn-primary" style="margin-top: 10px;">ACESSAR PAINEL</button>
-                
+                <button onclick="handleAuth('login')" class="btn-primary">ACESSAR PAINEL</button>
                 <div style="text-align: center; margin-top: 25px;">
-                    <span style="color: var(--text-dim); font-size: 14px;">Novo por aqui?</span>
-                    <a onclick="handleAuth('signup')" style="color: var(--bombeiro-dourado); cursor: pointer; font-weight: 800; margin-left: 8px;">Criar Conta</a>
+                    <a onclick="handleAuth('signup')" style="color: var(--bombeiro-dourado); cursor: pointer; font-weight: 800;">Criar Conta</a>
                 </div>
             </div>
         </div>
 
         <div id="checklist-area" style="display: none;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <h2 style="margin:0">Meu Enxoval (Fiel ao PDF)</h2>
-                <button onclick="logout()" class="btn-outline">SAIR</button>
+                <h2 style="margin:0">Meu Enxoval (CFP BM 2026)</h2>
+                <button onclick="logout()" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; padding: 10px 20px; border-radius: 12px; cursor: pointer;">SAIR</button>
             </div>
             <div id="items-list"></div>
         </div>
     </div>
 
-    <!-- ÁREA ADMINISTRATIVA -->
     <div id="slide-admin" class="slide-container">
         <div class="card" style="max-width: 600px; margin: 0 auto;">
             <h2 style="margin-top:0">Gestão do Efetivo</h2>
-            <div class="input-group">
-                <i class="fa-solid fa-user-plus"></i>
-                <input type="text" id="admNome" class="input-field" placeholder="Nome Completo">
-            </div>
-            <div class="input-group">
-                <i class="fa-solid fa-arrow-up-9-1"></i>
-                <input type="number" id="admPos" class="input-field" placeholder="Posição Geral">
-            </div>
+            <input type="text" id="admNome" class="input-field" placeholder="Nome Completo" style="padding-left: 20px; margin-bottom: 15px;">
+            <input type="number" id="admPos" class="input-field" placeholder="Posição Geral" style="padding-left: 20px; margin-bottom: 15px;">
             <button onclick="adicionarAluno()" class="btn-primary">ADICIONAR NA LISTA</button>
         </div>
     </div>
@@ -256,87 +182,75 @@
         const db = getFirestore(app);
         const ADMIN_EMAIL = "caiodevanalista@gmail.com";
 
-        // DADOS INTEGRAIS CONFORME PDF (INCLUINDO REPETIÇÕES)
-        const ENXOVAL_PDF = [
-  { cat: "SEMANA DE ADAPTAÇÃO - 6ºD (TRÂNSITO)", items: [
-    { id: "1", d: "Calça jeans azul escura", m: 2, r: 3 },
-    { id: "2", d: "Camisa branca", m: 2, r: 4 },
-    { id: "3", d: "Cinto preto", m: 1, r: 1 },
-    { id: "4", d: "Fivela preta", m: 1, r: 1 },
-    { id: "5", d: "Tênis preto", m: 1, r: 2 },
-    { id: "6", d: "Meia branca", m: 2, r: 8 }
-  ]},
-
-  { cat: "SEMANA DE ADAPTAÇÃO - 6ºC (INTERNO)", items: [
-    { id: "13", d: "Gorro com pala cáqui", m: 1, r: 2 },
-    { id: "14", d: "Camisa de malha meia manga vermelha gola polo com brasão do CBMPA bordado (sem identificação)", m: 2, r: 5 },
-    { id: "15", d: "Calça jean azul índigo", m: 2, r: 3 },
-    { id: "16", d: "Cinto cadarço vermelho com fivela na cor dourada (lisa sem brasão)", m: 1, r: 1 },
-    { id: "17", d: "Meia esportiva branca, cano médio", m: 3, r: 8 },
-    { id: "18", d: "Tênis preto", m: 1, r: 2 }
-  ]},
-
-  { cat: "SEMANA DE ADAPTAÇÃO - 6ºC (TABELA COMPLEMENTAR)", items: [
-    { id: "7", d: "Gorro com pala cáqui", m: 1, r: 2 },
-    { id: "8", d: "Camisa de malha meia manga vermelha com brasão do CBMPA bordado (sem identificação)", m: 3, r: 5 },
-    { id: "9", d: "Calça jeans azul índigo", m: 2, r: 3 },
-    { id: "10", d: "Cinto cadarço vermelho com fivela na cor dourada (lisa sem brasão)", m: 1, r: 1 },
-    { id: "11", d: "Meia esportiva branca, cano médio", m: 3, r: 8 },
-    { id: "12", d: "Tênis preto", m: 1, r: 2 }
-  ]},
-
-  { cat: "EDUCAÇÃO FÍSICA MILITAR - 5ºA (MASCULINO)", items: [
-    { id: "13_ef", d: "Camisa de malha meia manga dry fit branca com brasão do CBMPA bordado", m: 3, r: 5 },
-    { id: "14_ef", d: "Short de educação física vermelho", m: 3, r: 5 },
-    { id: "15_ef", d: "Sandália de dedo na cor preta", m: 1, r: 1 },
-    { id: "16_ef", d: "Sunga preta", m: 2, r: 3 }
-  ]},
-
-  { cat: "MATERIAIS DE CAMA E BANHO", items: [
-    { id: "17", d: "Lençol de cama branco (tecido oxford, liso de solteiro)", m: 1, r: 1 },
-    { id: "18", d: "Cobertor de colchão branco com elástico (solteiro)", m: 1, r: 1 },
-    { id: "19", d: "Toalha de banho vermelha", m: 2, r: 2 },
-    { id: "20", d: "Toalha de rosto vermelha", m: 2, r: 2 }
-  ]},
-
-  { cat: "KIT MANUTENÇÃO DE UNIFORME", items: [
-    { id: "21", d: "Ferro de passar roupa", m: 1, r: 1 },
-    { id: "22", d: "Agulha e linha", m: 1, r: 1 },
-    { id: "23", d: "Graxa preta", m: 1, r: 1 },
-    { id: "24", d: "Aparelho de barbear", m: 1, r: 1 },
-    { id: "25", d: "Escova para sapato", m: 1, r: 1 }
-  ]},
-
-  { cat: "KIT DE HIGIENE - MASCULINO", items: [
-    { id: "26", d: "Creme dental, escova de dentes, fio dental, sabonete, saboneteira, desodorante, cortador de unhas e protetor solar", m: 1, r: 1 }
-  ]},
-
-  { cat: "KIT OPERACIONAL", items: [
-    { id: "27", d: "Bolsa preta tipo mochila mínimo 30L sem identificação (recomendado 55L)", m: 1, r: 1 },
-    { id: "28", d: "Cantil preto de 1L com porta cantil", m: 1, r: 1 },
-    { id: "29", d: "6m de cabo da vida na cor laranja de 12mm", m: 1, r: 1 },
-    { id: "30", d: "Cinto N.A vermelho com ilhós pretos", m: 1, r: 1 },
-    { id: "31", d: "Lanterna pequena de mão", m: 1, r: 1 }
-  ]},
-
-  { cat: "KIT MATERIAL ESCREVENTE", items: [
-    { id: "32", d: "Bloco de anotações de bolso", m: 1, r: 1 },
-    { id: "33", d: "Caneta esferográfica", m: 4, r: 4 },
-    { id: "34", d: "Lápis", m: 2, r: 2 },
-    { id: "35", d: "Borracha", m: 1, r: 1 },
-    { id: "36", d: "Caderno de matérias vermelho encapado com brasão do CFAE em fundo branco", m: 2, r: 2 }
-  ]},
-
-  { cat: "AULA MAGNA (SOCIAL)", items: [
-    { id: "37", d: "Terno preto liso", m: 1, r: 1 },
-    { id: "38", d: "Camisa social branca", m: 1, r: 1 },
-    { id: "39", d: "Gravata vertical", m: 1, r: 1 },
-    { id: "40", d: "Calça preta social lisa", m: 1, r: 1 },
-    { id: "41", d: "Cinto social preto", m: 1, r: 1 },
-    { id: "42", d: "Sapato social preto", m: 1, r: 1 },
-    { id: "43", d: "Meia social preta", m: 1, r: 1 }
-  ]}
-];
+        const NOVO_ENXOVAL = [
+            { cat: "SEMANA ADMINISTRATIVA (APRESENTAÇÃO)", items: [
+                { id: "sa1", d: "Calça jeans azul escuro", m: 2, r: 3 },
+                { id: "sa2", d: "Camisa branca", m: 2, r: 4 },
+                { id: "sa3", d: "Cinto preto", m: 1, r: 1 },
+                { id: "sa4", d: "Fivela preta", m: 1, r: 1 },
+                { id: "sa5", d: "Ténis preto", m: 1, r: 2 },
+                { id: "sa6", d: "Meia branca", m: 2, r: 8 }
+            ]},
+            { cat: "UNIFORME DE ADAPTAÇÃO / TRÂNSITO (6ºD)", items: [
+                { id: "ut1", d: "Calça jeans azul escuro", m: 2, r: 3 },
+                { id: "ut2", d: "Camisa branca", m: 2, r: 4 },
+                { id: "ut3", d: "Cinto preto", m: 1, r: 1 },
+                { id: "ut4", d: "Fivela preta", m: 1, r: 1 },
+                { id: "ut5", d: "Ténis preto", m: 1, r: 2 },
+                { id: "ut6", d: "Meia branca", m: 2, r: 8 }
+            ]},
+            { cat: "UNIFORME DE ADAPTAÇÃO / INTERNO (6ºC)", items: [
+                { id: "ui1", d: "Gorro com pala cáqui", m: 1, r: 2 },
+                { id: "ui2", d: "Camisa vermelha com brasão CBMPA (sem ID)", m: 3, r: 5 },
+                { id: "ui3", d: "Calça jeans azul índigo", m: 2, r: 3 },
+                { id: "ui4", d: "Cinto cadarço vermelho (fivela dourada lisa)", m: 1, r: 1 },
+                { id: "ui5", d: "Meia esportiva branca, cano médio", m: 3, r: 8 },
+                { id: "ui6", d: "Ténis preto", m: 1, r: 2 },
+                { id: "ui7_fem", d: "Top preto (efetivo feminino)", m: 3, r: 5 }
+            ]},
+            { cat: "EDUCAÇÃO FÍSICA MILITAR (5ºA)", items: [
+                { id: "ef1", d: "Camisa dry fit branca com brasão", m: 3, r: 5 },
+                { id: "ef2", d: "Short de educação física vermelho", m: 3, r: 5 },
+                { id: "ef3", d: "Sandália de dedo preta", m: 1, r: 1 },
+                { id: "ef4_mas", d: "Sunga preta (efetivo masculino)", m: 2, r: 3 },
+                { id: "ef5_fem", d: "Maiô preto (efetivo feminino)", m: 2, r: 3 },
+                { id: "ef6_fem", d: "Bermuda feminina preta (efetivo feminino)", m: 2, r: 3 },
+                { id: "ef7", d: "Touca de natação preta", m: 1, r: 1 }
+            ]},
+            { cat: "CAMA E BANHO", items: [
+                { id: "cb1", d: "Lençol de cama branco (Oxford liso)", m: 1, r: 1 },
+                { id: "cb2", d: "Cobertor de colchão branco com elástico", m: 1, r: 1 },
+                { id: "cb3", d: "Toalha de banho vermelha", m: 2, r: 2 },
+                { id: "cb4", d: "Toalha de rosto vermelha", m: 2, r: 2 }
+            ]},
+            { cat: "KITS DE HIGIENE E MANUTENÇÃO", items: [
+                { id: "kh1", d: "Kit Higiene (Creme, escova, fio, sabonete, desodorante, cortador, protetor)", m: 1, r: 1 },
+                { id: "kh2", d: "Kit Manutenção (Ferro, agulha, linha, graxa, escova sapato)", m: 1, r: 1 },
+                { id: "kh3_fem", d: "Kit Feminino (Gel, redinha, grampos)", m: 1, r: 1 }
+            ]},
+            { cat: "KIT OPERACIONAL", items: [
+                { id: "ko1", d: "Bolsa preta mochila mín 30L (Rec 55L)", m: 1, r: 1 },
+                { id: "ko2", d: "Cantil preto 1L com porta cantil", m: 1, r: 1 },
+                { id: "ko3", d: "6m Cabo da vida laranja (12mm)", m: 1, r: 1 },
+                { id: "ko4", d: "Cinto N.A vermelho com ilhós pretos", m: 1, r: 1 },
+                { id: "ko5", d: "Lanterna pequena de mão", m: 1, r: 1 }
+            ]},
+            { cat: "MATERIAL ESCREVENTE", items: [
+                { id: "me1", d: "Bloco de anotações de bolso", m: 1, r: 1 },
+                { id: "me2", d: "Canetas esferográficas", m: 4, r: 4 },
+                { id: "me3", d: "Lápis (2x) e Borracha (1x)", m: 1, r: 1 },
+                { id: "me4", d: "Caderno vermelho encapado (Brasão CFAE)", m: 2, r: 2 }
+            ]},
+            { cat: "AULA INAUGURAL (SOCIAL)", items: [
+                { id: "soc1", d: "Terno/Blazer preto liso", m: 1, r: 1 },
+                { id: "soc2", d: "Camisa social branca", m: 1, r: 1 },
+                { id: "soc3", d: "Gravata vertical vermelha (Laço p/ Fem)", m: 1, r: 1 },
+                { id: "soc4", d: "Calça preta social lisa", m: 1, r: 1 },
+                { id: "soc5", d: "Cinto social preto", m: 1, r: 1 },
+                { id: "soc6", d: "Sapato social preto", m: 1, r: 1 },
+                { id: "soc7", d: "Meia social preta", m: 1, r: 1 }
+            ]}
+        ];
 
         window.showSlide = (id) => {
             document.querySelectorAll('.slide-container').forEach(s => s.classList.remove('active'));
@@ -355,22 +269,15 @@
         window.handleAuth = async (type) => {
             const e = document.getElementById('userEmail').value;
             const p = document.getElementById('userPass').value;
-            if(!e || !p) return showAlert("Por favor, preencha todos os campos.", "error");
-            if(p.length < 6) return showAlert("A senha deve conter ao menos 6 dígitos.", "error");
-
+            if(!e || !p) return showAlert("Preencha todos os campos.", "error");
             try {
                 if(type === 'signup') {
                     await createUserWithEmailAndPassword(auth, e, p);
-                    showAlert("Conta criada com sucesso!", "success");
+                    showAlert("Conta criada!", "success");
                 } else {
                     await signInWithEmailAndPassword(auth, e, p);
                 }
-            } catch (err) {
-                let msg = "Falha na autenticação.";
-                if(err.code === 'auth/invalid-credential') msg = "E-mail ou senha incorretos.";
-                if(err.code === 'auth/email-already-in-use') msg = "Este e-mail já está cadastrado.";
-                showAlert(msg, "error");
-            }
+            } catch (err) { showAlert("Erro de acesso.", "error"); }
         };
 
         window.logout = () => signOut(auth);
@@ -389,18 +296,17 @@
             }
         });
 
-        // GESTÃO DE ALUNOS
         onSnapshot(query(collection(db, "alunos_lista"), orderBy("posicao", "asc")), snap => {
             const body = document.getElementById('alunoTableBody');
             body.innerHTML = ""; let i = 1;
             snap.forEach(d => {
                 const a = d.data(); const isA = auth.currentUser?.email === ADMIN_EMAIL;
-                body.innerHTML += `<tr>
-                    <td><b>${i}º</b></td>
-                    <td>${a.nome}</td>
-                    <td style="color:var(--bombeiro-dourado); font-weight:700">${a.posicao}º</td>
-                    <td class="admin-only" style="display:${isA?'table-cell':'none'}">
-                        <button onclick="removerAluno('${d.id}')" style="background:rgba(239,68,68,0.2); color:#fca5a5; border:1px solid #ef4444; border-radius:8px; padding:5px 12px; cursor:pointer;">EXCLUIR</button>
+                body.innerHTML += `<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 20px;"><b>${i}º</b></td>
+                    <td style="padding: 20px;">${a.nome}</td>
+                    <td style="padding: 20px; color:var(--bombeiro-dourado);">${a.posicao}º</td>
+                    <td class="admin-only" style="display:${isA?'table-cell':'none'}; padding: 20px;">
+                        <button onclick="removerAluno('${d.id}')" style="background:#ef4444; border:none; color:white; padding:5px 10px; border-radius:8px; cursor:pointer;">EXCLUIR</button>
                     </td>
                 </tr>`; i++;
             });
@@ -408,13 +314,10 @@
 
         window.adicionarAluno = async () => {
             const n = document.getElementById('admNome').value; const p = parseInt(document.getElementById('admPos').value);
-            if(n && p) {
-                await addDoc(collection(db, "alunos_lista"), { nome: n, posicao: p });
-                document.getElementById('admNome').value = ""; document.getElementById('admPos').value = "";
-            }
+            if(n && p) { await addDoc(collection(db, "alunos_lista"), { nome: n, posicao: p }); document.getElementById('admNome').value = ""; document.getElementById('admPos').value = ""; }
         };
 
-        window.removerAluno = async (id) => { if(confirm("Remover este aluno?")) await deleteDoc(doc(db, "alunos_lista", id)); };
+        window.removerAluno = async (id) => { if(confirm("Remover?")) await deleteDoc(doc(db, "alunos_lista", id)); };
 
         async function loadChecklist(uid) {
             const container = document.getElementById('items-list');
@@ -422,7 +325,7 @@
             const saved = snap.exists() ? snap.data() : {};
             container.innerHTML = "";
 
-            ENXOVAL_PDF.forEach(cat => {
+            NOVO_ENXOVAL.forEach(cat => {
                 const h = document.createElement('div');
                 h.className = 'category-header';
                 h.innerHTML = `<h3>${cat.cat}</h3>`;
@@ -449,9 +352,7 @@
         window.saveItem = async (uid, iid, s) => { await setDoc(doc(db, "checklists", uid), { [iid]: s }, { merge: true }); };
 
         setInterval(() => {
-            const target = new Date("July 01, 2026").getTime();
-            const now = new Date().getTime();
-            const diff = target - now;
+            const diff = new Date("July 01, 2026").getTime() - new Date().getTime();
             document.getElementById('days-timer').innerText = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24))).toString().padStart(3, '0');
         }, 1000);
     </script>
