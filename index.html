@@ -141,6 +141,16 @@
         }
         .alert-error { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
         .alert-success { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+
+        .category-title {
+            color: var(--bombeiro-dourado);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--bombeiro-vermelho);
+            padding-left: 10px;
+            font-size: 1.1em;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
@@ -205,7 +215,7 @@
         </div>
         <div id="checklist-area" style="display: none;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2>Meu Enxoval Individual</h2>
+                <h2>Meu Enxoval Individual (CBMPA 2026)</h2>
                 <button onclick="logout()" style="background: #334155; padding: 8px 15px;">Sair</button>
             </div>
             <div id="items-list"></div>
@@ -247,7 +257,66 @@
         const db = getFirestore(app);
         const ADMIN_EMAIL = "caiodevanalista@gmail.com";
 
-        const itensEnxoval = ["Gandola / Calça", "Coturno", "Camisetas Brancas", "Gorro Fardado", "Cinto de Guarnição", "Meias Pretas", "Higiene Pessoal", "Kit Limpeza", "Kit Costura", "Protetor Solar"];
+        const enxovalCompleto = {
+            "Semana de Adaptação - 6ºD (Trânsito)": [
+                "Calça jeans azul escura (Mín: 2, Rec: 3)",
+                "Camisa branca (Mín: 2, Rec: 4)",
+                "Cinto preto (Mín: 1, Rec: 1)",
+                "Fivela preta (Mín: 1, Rec: 1)",
+                "Tênis preto (Mín: 1, Rec: 2)",
+                "Meia branca (Mín: 2, Rec: 8)"
+            ],
+            "Semana de Adaptação - 6ºC (Interno)": [
+                "Gorro com pala cáqui (Mín: 1, Rec: 2)",
+                "Camisa malha vermelha gola polo bordada (Mín: 2, Rec: 5)",
+                "Calça jeans azul índigo (Mín: 2, Rec: 3)",
+                "Cinto cadarço vermelho com fivela dourada (Mín: 1, Rec: 1)",
+                "Meia esportiva branca cano médio (Mín: 3, Rec: 8)",
+                "Tênis preto (Mín: 1, Rec: 2)"
+            ],
+            "Educação Física Militar (5ºA)": [
+                "Camisa dry fit branca bordada (Mín: 3, Rec: 5)",
+                "Short educação física vermelho (Mín: 3, Rec: 5)",
+                "Sandália de dedo preta (Mín: 1, Rec: 1)",
+                "Sunga preta (Mín: 2, Rec: 3)"
+            ],
+            "Kit Higiene, Cama e Banho": [
+                "Kit Higiene (Creme, Escova, Sabonete, Protetor, etc)",
+                "Lençol de cama branco oxford liso solteiro (Mín: 1, Rec: 1)",
+                "Cobertor de colchão branco com elástico (Mín: 1, Rec: 1)",
+                "Toalha de banho vermelha (Mín: 2, Rec: 2)",
+                "Toalha de rosto vermelha (Mín: 2, Rec: 2)"
+            ],
+            "Kit Operacional": [
+                "Bolsa preta mochila mín 30L (Rec: 55L)",
+                "Cantil preto 1L com porta cantil",
+                "6m Cabo da vida laranja 12mm",
+                "Cinto N.A vermelho ilhós pretos",
+                "Lanterna pequena de mão"
+            ],
+            "Kit Manutenção de Uniforme": [
+                "Ferro de passar roupa",
+                "Agulha e linha",
+                "Graxa preta",
+                "Aparelho de barbear",
+                "Escova para sapato"
+            ],
+            "Kit Material Escrevente": [
+                "Bloco de anotações de bolso",
+                "Caneta esferográfica (4 unidades)",
+                "Lápis (2 unidades) e Borracha",
+                "Caderno matérias vermelho encapado CFAE"
+            ],
+            "Aula Magna / Social": [
+                "Terno preto liso",
+                "Camisa social branca",
+                "Gravata vertical",
+                "Calça preta social lisa",
+                "Cinto social preto",
+                "Sapato social preto",
+                "Meia social preta"
+            ]
+        };
 
         window.showSlide = (id) => {
             document.querySelectorAll('.slide-container').forEach(s => s.classList.remove('active'));
@@ -256,7 +325,6 @@
             document.getElementById('link-' + id).classList.add('active');
         };
 
-        // LISTA DINÂMICA COM 3 COLUNAS E ORDEM CORRETA
         onSnapshot(query(collection(db, "alunos_lista"), orderBy("posicao", "asc")), (snapshot) => {
             const table = document.getElementById('alunoTableBody');
             table.innerHTML = "";
@@ -288,7 +356,6 @@
 
         window.removerAluno = async (id) => { if(confirm("Remover aluno?")) await deleteDoc(doc(db, "alunos_lista", id)); };
 
-        // TRATATIVA DE ERROS PROFISSIONAL
         const showAuthAlert = (msg, type) => {
             const alert = document.getElementById('auth-alert');
             alert.innerText = msg;
@@ -300,30 +367,15 @@
         window.handleAuth = async (type) => {
             const email = document.getElementById('userEmail').value;
             const pass = document.getElementById('userPass').value;
-            
-            if (!email || !pass) {
-                showAuthAlert("Preencha todos os campos.", "error");
-                return;
-            }
-
+            if (!email || !pass) { showAuthAlert("Preencha todos os campos.", "error"); return; }
             try {
-                if (type === 'signup') {
-                    await createUserWithEmailAndPassword(auth, email, pass);
-                    showAuthAlert("Conta criada com sucesso! Bem-vindo.", "success");
-                } else {
-                    await signInWithEmailAndPassword(auth, email, pass);
-                }
+                if (type === 'signup') { await createUserWithEmailAndPassword(auth, email, pass); showAuthAlert("Conta criada!", "success"); }
+                else { await signInWithEmailAndPassword(auth, email, pass); }
             } catch (error) {
-                let mensagem = "Erro ao processar. Tente novamente.";
-                switch (error.code) {
-                    case 'auth/email-already-in-use': mensagem = "Este e-mail já está cadastrado."; break;
-                    case 'auth/invalid-email': mensagem = "E-mail inválido."; break;
-                    case 'auth/weak-password': mensagem = "A senha deve ter pelo menos 6 caracteres."; break;
-                    case 'auth/wrong-password': mensagem = "Senha incorreta."; break;
-                    case 'auth/user-not-found': mensagem = "E-mail não encontrado."; break;
-                    case 'auth/invalid-credential': mensagem = "Credenciais inválidas. Verifique e-mail e senha."; break;
-                }
-                showAuthAlert(mensagem, "error");
+                let m = "Erro no acesso.";
+                if(error.code === 'auth/email-already-in-use') m = "E-mail já cadastrado.";
+                if(error.code === 'auth/wrong-password') m = "Senha incorreta.";
+                showAuthAlert(m, "error");
             }
         };
 
@@ -332,7 +384,6 @@
         onAuthStateChanged(auth, user => {
             const isAdmin = user?.email === ADMIN_EMAIL;
             document.querySelectorAll('.admin-only').forEach(el => el.style.display = isAdmin ? 'block' : 'none');
-            
             if (user) {
                 document.getElementById('auth-area').style.display = 'none';
                 document.getElementById('checklist-area').style.display = 'block';
@@ -348,20 +399,25 @@
             const docSnap = await getDoc(doc(db, "checklists", uid));
             const data = docSnap.exists() ? docSnap.data() : {};
             div.innerHTML = "";
-            itensEnxoval.forEach(item => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'checklist-item';
-                itemDiv.innerHTML = `<input type="checkbox" ${data[item] ? 'checked' : ''} onchange="saveItem('${uid}','${item}',this.checked)"><span>${item}</span>`;
-                div.appendChild(itemDiv);
-            });
+            for (const [categoria, itens] of Object.entries(enxovalCompleto)) {
+                const catTitle = document.createElement('div');
+                catTitle.className = 'category-title';
+                catTitle.innerText = categoria;
+                div.appendChild(catTitle);
+                itens.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'checklist-item';
+                    itemDiv.innerHTML = `<input type="checkbox" ${data[item] ? 'checked' : ''} onchange="saveItem('${uid}','${item}',this.checked)"><span>${item}</span>`;
+                    div.appendChild(itemDiv);
+                });
+            }
         }
 
         window.saveItem = async (uid, item, status) => { await setDoc(doc(db, "checklists", uid), { [item]: status }, { merge: true }); };
 
-        // TIMER
         setInterval(() => {
             const diff = new Date("July 01, 2026").getTime() - new Date().getTime();
-            document.getElementById('days-timer').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById('days-timer').innerText = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
         }, 1000);
     </script>
 </body>
