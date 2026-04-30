@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POLO CASTANHAL T3 - Sistema de Gestão</title>
+    <title>POLO CASTANHAL T3 - Gestão CBMPA</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;700&display=swap" rel="stylesheet">
@@ -20,17 +20,16 @@
         }
 
         * { box-sizing: border-box; }
-
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
             font-family: 'Urbanist', sans-serif;
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             overflow-x: hidden;
             line-height: 1.6;
         }
 
+        /* NAVEGAÇÃO RESPONSIVA */
         nav {
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
@@ -40,38 +39,25 @@
             align-items: center;
             padding: 15px 20px;
             position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
+            top: 0; width: 100%; z-index: 1000;
         }
-
-        @media (min-width: 768px) {
-            nav { flex-direction: row; justify-content: space-between; padding: 15px 40px; }
-        }
+        @media (min-width: 768px) { nav { flex-direction: row; justify-content: space-between; padding: 15px 40px; } }
 
         .logo { font-weight: 700; font-size: 18px; color: var(--bombeiro-vermelho); letter-spacing: 1px; margin-bottom: 10px; }
         @media (min-width: 768px) { .logo { margin-bottom: 0; font-size: 20px; } }
 
         .nav-links { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
-        @media (min-width: 768px) { .nav-links { gap: 30px; } }
-
         .nav-links a {
             color: var(--text-dim);
-            cursor: pointer;
-            font-weight: 500;
-            text-decoration: none;
-            transition: 0.3s;
-            font-size: 14px;
+            cursor: pointer; font-weight: 500; text-decoration: none;
+            transition: 0.3s; font-size: 14px;
         }
         .nav-links a.active, .nav-links a:hover { color: var(--bombeiro-dourado); }
 
         .slide-container {
-            display: none;
-            min-height: 100vh;
+            display: none; min-height: 100vh;
             padding: 140px 20px 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
+            max-width: 1200px; margin: 0 auto; width: 100%;
             animation: fadeIn 0.4s ease-in-out;
         }
         .slide-container.active { display: block; }
@@ -79,103 +65,48 @@
 
         .card {
             background: var(--card-dark);
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 20px; padding: 20px;
             border: 1px solid rgba(255,255,255,0.05);
             margin-bottom: 20px;
         }
-        @media (min-width: 768px) { .card { padding: 30px; } }
 
-        .hero-section { display: flex; flex-direction: column; gap: 30px; }
-        @media (min-width: 992px) { .hero-section { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; } }
+        /* ALERTAS DE ERRO / SUCESSO */
+        .alert-message {
+            padding: 12px; border-radius: 8px; margin-bottom: 20px;
+            font-size: 14px; display: none; text-align: center;
+            font-weight: 600;
+        }
+        .alert-error { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid #ef4444; }
+        .alert-success { background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid #22c55e; }
+
+        /* TABELAS */
+        .table-responsive { width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 450px; }
+        th { text-align: left; color: var(--bombeiro-dourado); padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        input, button { width: 100%; padding: 14px; border-radius: 8px; font-size: 16px; border: none; }
+        input { background: #0f172a; color: white; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 15px; }
+        button { background: var(--bombeiro-vermelho); color: white; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        button:hover { filter: brightness(1.2); }
+
+        .admin-only { display: none; }
+
+        .checklist-item {
+            background: rgba(255,255,255,0.03); margin-bottom: 8px;
+            padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 15px;
+        }
+        .category-title {
+            color: var(--bombeiro-dourado); margin: 25px 0 10px;
+            border-left: 4px solid var(--bombeiro-vermelho); padding-left: 12px;
+            font-weight: 700; text-transform: uppercase;
+        }
 
         .timer-card {
             background: linear-gradient(135deg, var(--bombeiro-vermelho), #8b0000);
-            border-radius: 24px;
-            padding: 30px;
-            text-align: center;
+            border-radius: 24px; padding: 30px; text-align: center;
         }
-        .timer-value { font-size: clamp(40px, 8vw, 70px); font-weight: 700; display: block; line-height: 1; }
-
-        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 450px; }
-        th { text-align: left; color: var(--bombeiro-dourado); padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 14px; }
-        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
-
-        .search-bar {
-            width: 100%;
-            padding: 12px;
-            border-radius: 12px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: white;
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: #0f172a;
-            color: white;
-            font-size: 16px;
-        }
-
-        button {
-            background: var(--bombeiro-vermelho);
-            color: white;
-            border: none;
-            padding: 14px 20px;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            transition: 0.3s;
-            font-size: 16px;
-        }
-        button:hover { filter: brightness(1.1); }
-
-        .checklist-item {
-            background: rgba(255,255,255,0.03);
-            margin-bottom: 8px;
-            padding: 15px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .checklist-item input[type="checkbox"] { width: 22px; height: 22px; margin-bottom: 0; cursor: pointer; }
-
-        .category-title {
-            color: var(--bombeiro-dourado);
-            margin: 25px 0 12px;
-            border-left: 4px solid var(--bombeiro-vermelho);
-            padding-left: 12px;
-            font-size: 16px;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .alert-message {
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            display: none;
-            text-align: center;
-        }
-        .alert-error { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
-        .alert-success { background: rgba(34, 197, 94, 0.15); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.3); }
-
-        .img-hero {
-            background: url('https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&q=80&w=800') center/cover;
-            height: 250px;
-            border-radius: 20px;
-            border: 2px solid var(--bombeiro-dourado);
-        }
+        .timer-value { font-size: 60px; font-weight: 700; display: block; }
     </style>
 </head>
 <body>
@@ -186,80 +117,62 @@
             <a onclick="showSlide('home')" id="link-home" class="active">Início</a>
             <a onclick="showSlide('lista')" id="link-lista">Lista T3</a>
             <a onclick="showSlide('checklist')" id="link-checklist">Enxoval</a>
-            <a onclick="showSlide('admin')" id="link-admin" class="admin-only" style="display:none">Painel ADM</a>
+            <a onclick="showSlide('admin')" id="link-admin" class="admin-only">Painel ADM</a>
         </div>
     </nav>
 
-    <!-- INICIO -->
     <div id="slide-home" class="slide-container active">
-        <div class="hero-section">
-            <div>
-                <h1 style="font-size: clamp(28px, 5vw, 48px);">Gestão de Efetivo <span style="color:var(--bombeiro-vermelho)">T3</span></h1>
-                <p style="color: var(--text-dim); margin: 20px 0;">Plataforma oficial para controle de enxoval e consulta de antiguidade do Polo Castanhal (CBMPA 2026).</p>
-                <div class="timer-card">
-                    <span class="timer-value" id="days-timer">000</span>
-                    <span style="letter-spacing: 2px; font-weight: 700; font-size: 14px;">DIAS PARA O CFP</span>
-                </div>
+        <div class="card">
+            <h1>CFP Castanhal <span style="color:var(--bombeiro-vermelho)">2026</span></h1>
+            <p>Sistema oficial de gestão do enxoval e antiguidade.</p>
+            <div class="timer-card">
+                <span class="timer-value" id="days-timer">000</span>
+                <span>DIAS PARA O CFP</span>
             </div>
-            <div class="img-hero"></div>
         </div>
     </div>
 
-    <!-- LISTA T3 -->
     <div id="slide-lista" class="slide-container">
         <div class="card">
-            <h2 style="margin-bottom: 20px;"><i class="fa-solid fa-list-ol"></i> Lista de Colocados</h2>
-            <input type="text" id="searchAlunos" class="search-bar" placeholder="Pesquisar por nome...">
+            <h2>Lista de Efetivo</h2>
             <div class="table-responsive">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>Nº</th>
-                            <th>Nome do Aluno</th>
-                            <th>Posição</th>
-                            <th class="admin-only" style="display:none">Ação</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>Nº</th><th>Nome</th><th>Posição</th><th class="admin-only">Ações</th></tr></thead>
                     <tbody id="alunoTableBody"></tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- MEU CHECKLIST -->
     <div id="slide-checklist" class="slide-container">
-        <div id="auth-area" style="max-width: 450px; margin: 0 auto; width: 100%;">
+        <div id="auth-area" style="max-width: 450px; margin: 0 auto;">
             <div class="card">
-                <h3 style="text-align:center; margin-bottom: 20px;">Acesso do Aluno</h3>
+                <h3 style="text-align:center">Acesso do Aluno</h3>
                 <div id="auth-alert" class="alert-message"></div>
                 <input type="email" id="userEmail" placeholder="E-mail">
-                <input type="password" id="userPass" placeholder="Senha">
+                <input type="password" id="userPass" placeholder="Senha (min. 6 caracteres)">
                 <button onclick="handleAuth('login')">Entrar</button>
-                <p style="text-align:center; margin: 15px 0 5px; font-size: 14px; color: var(--text-dim);">Novo por aqui?</p>
-                <button onclick="handleAuth('signup')" style="background: #475569; padding: 10px;">Criar Minha Conta</button>
+                <button onclick="handleAuth('signup')" style="background: #475569; margin-top:10px">Criar Conta</button>
             </div>
         </div>
         <div id="checklist-area" style="display: none;">
-            <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px;">
-                <h2 style="margin:0">Meu Enxoval (2026)</h2>
-                <button onclick="logout()" style="background: #334155; padding: 10px; width: fit-content; font-size: 14px;">Sair da Conta</button>
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Meu Enxoval</h2>
+                    <button onclick="logout()" style="width:auto; padding: 8px 15px; background: #334155;">Sair</button>
+                </div>
+                <div id="items-list"></div>
             </div>
-            <div id="items-list"></div>
         </div>
     </div>
 
-    <!-- PAINEL ADM -->
     <div id="slide-admin" class="slide-container">
         <div class="card">
-            <h2><i class="fa-solid fa-user-shield"></i> Área Administrativa</h2>
-            <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 15px; border: 1px dashed var(--bombeiro-vermelho);">
-                <h4 style="margin-top:0">Novo Aluno</h4>
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <input type="text" id="admNome" placeholder="Nome Completo" style="margin:0">
-                    <input type="number" id="admPos" placeholder="Posição Geral" style="margin:0">
-                    <button onclick="adicionarAluno()">Cadastrar na Lista</button>
-                </div>
-            </div>
+            <h2><i class="fa-solid fa-lock"></i> Painel Administrativo</h2>
+            <p>Apenas acesso autorizado.</p>
+            <input type="text" id="admNome" placeholder="Nome do Aluno">
+            <input type="number" id="admPos" placeholder="Posição Geral">
+            <button onclick="adicionarAluno()">Adicionar Aluno</button>
         </div>
     </div>
 
@@ -274,8 +187,7 @@
             projectId: "cbmt3castanhal",
             storageBucket: "cbmt3castanhal.firebasestorage.app",
             messagingSenderId: "923532708352",
-            appId: "1:923532708352:web:897d4f2f7208460290a6e5",
-            measurementId: "G-T3K5S92DSH"
+            appId: "1:923532708352:web:897d4f2f7208460290a6e5"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -283,15 +195,10 @@
         const db = getFirestore(app);
         const ADMIN_EMAIL = "caiodevanalista@gmail.com";
 
-        const enxovalCompleto = {
-            "Adaptação 6ºD (Trânsito)": ["Calça jeans azul escura (Mín: 2)", "Camisa branca (Mín: 2)", "Cinto preto", "Fivela preta", "Tênis preto", "Meia branca"],
-            "Adaptação 6ºC (Interno)": ["Gorro cáqui", "Polo vermelha bordada", "Calça jeans índigo", "Cinto vermelho/fivela dourada", "Meia branca cano médio", "Tênis preto"],
-            "Educação Física (5ºA)": ["Camisa dry fit branca bordada", "Short vermelho", "Sandália preta", "Sunga preta"],
-            "Higiene e Cama": ["Kit Higiene Completo", "Lençol branco solteiro", "Cobertor colchão branco", "Toalha banho vermelha", "Toalha rosto vermelha"],
-            "Kit Operacional": ["Mochila preta (Min 30L)", "Cantil 1L", "6m Cabo da vida 12mm", "Cinto N.A vermelho", "Lanterna"],
-            "Manutenção": ["Ferro de passar", "Agulha/Linha", "Graxa preta", "Aparelho barbear", "Escova sapato"],
-            "Material Escrevente": ["Bloco bolso", "Canetas (4x)", "Lápis/Borracha", "Caderno CFAE encapado"],
-            "Aula Magna (Social)": ["Terno preto", "Camisa branca social", "Gravata vertical", "Sapato social preto", "Meia social preta"]
+        const enxoval = {
+            "Adaptação": ["Calça jeans azul escura", "Camisa branca", "Tênis preto", "Meia branca"],
+            "Educação Física": ["Camisa dry fit branca", "Short vermelho", "Sunga preta"],
+            "Kits": ["Kit Higiene", "Cabo da vida 12mm", "Cantil 1L", "Lanterna"]
         };
 
         window.showSlide = (id) => {
@@ -299,24 +206,72 @@
             document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
             document.getElementById('slide-' + id).classList.add('active');
             document.getElementById('link-' + id).classList.add('active');
-            window.scrollTo(0,0);
         };
 
-        onSnapshot(query(collection(db, "alunos_lista"), orderBy("posicao", "asc")), (snapshot) => {
-            const table = document.getElementById('alunoTableBody');
-            table.innerHTML = "";
-            let contador = 1;
-            snapshot.forEach((docSnap) => {
-                const a = docSnap.data();
+        const showAlert = (msg, type) => {
+            const el = document.getElementById('auth-alert');
+            el.innerText = msg;
+            el.className = `alert-message ${type === 'error' ? 'alert-error' : 'alert-success'}`;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 5000);
+        };
+
+        window.handleAuth = async (type) => {
+            const email = document.getElementById('userEmail').value;
+            const pass = document.getElementById('userPass').value;
+
+            if(!email || !pass) return showAlert("Preencha todos os campos.", "error");
+            if(pass.length < 6) return showAlert("A senha deve ter pelo menos 6 caracteres.", "error");
+
+            try {
+                if(type === 'signup') {
+                    await createUserWithEmailAndPassword(auth, email, pass);
+                    showAlert("Conta criada com sucesso!", "success");
+                } else {
+                    await signInWithEmailAndPassword(auth, email, pass);
+                }
+            } catch (err) {
+                let m = "Erro de autenticação.";
+                if(err.code === 'auth/email-already-in-use') m = "Este e-mail já está em uso.";
+                if(err.code === 'auth/invalid-credential') m = "E-mail ou senha incorretos.";
+                showAlert(m, "error");
+            }
+        };
+
+        window.logout = () => signOut(auth);
+
+        onAuthStateChanged(auth, user => {
+            const isAdmin = user && user.email === ADMIN_EMAIL;
+            document.querySelectorAll('.admin-only').forEach(el => el.style.display = isAdmin ? 'table-cell' : 'none');
+            document.getElementById('link-admin').style.display = isAdmin ? 'block' : 'none';
+            
+            if(user) {
+                document.getElementById('auth-area').style.display = 'none';
+                document.getElementById('checklist-area').style.display = 'block';
+                loadChecklist(user.uid);
+            } else {
+                document.getElementById('auth-area').style.display = 'block';
+                document.getElementById('checklist-area').style.display = 'none';
+            }
+        });
+
+        // LISTA E ADMIN
+        onSnapshot(query(collection(db, "alunos_lista"), orderBy("posicao", "asc")), snap => {
+            const body = document.getElementById('alunoTableBody');
+            body.innerHTML = "";
+            let i = 1;
+            snap.forEach(d => {
+                const a = d.data();
                 const isAdmin = auth.currentUser?.email === ADMIN_EMAIL;
-                table.innerHTML += `
-                    <tr>
-                        <td>${contador}º</td>
-                        <td><strong>${a.nome}</strong></td>
-                        <td style="color:#f1c40f; font-weight:700">${a.posicao}º</td>
-                        ${isAdmin ? `<td class="admin-only"><button onclick="removerAluno('${docSnap.id}')" style="background:#ef4444; width:auto; padding:5px 10px; font-size:12px">X</button></td>` : ''}
-                    </tr>`;
-                contador++;
+                body.innerHTML += `<tr>
+                    <td>${i}º</td>
+                    <td>${a.nome}</td>
+                    <td>${a.posicao}º</td>
+                    <td class="admin-only" style="display:${isAdmin?'table-cell':'none'}">
+                        <button onclick="removerAluno('${d.id}')" style="background:#ef4444; padding:5px 10px; width:auto">X</button>
+                    </td>
+                </tr>`;
+                i++;
             });
         });
 
@@ -331,53 +286,18 @@
 
         window.removerAluno = async (id) => { if(confirm("Excluir?")) await deleteDoc(doc(db, "alunos_lista", id)); };
 
-        const showAuthAlert = (msg, type) => {
-            const a = document.getElementById('auth-alert');
-            a.innerText = msg; a.className = `alert-message ${type === 'error' ? 'alert-error' : 'alert-success'}`;
-            a.style.display = 'block'; setTimeout(() => a.style.display = 'none', 4000);
-        };
-
-        window.handleAuth = async (type) => {
-            const e = document.getElementById('userEmail').value;
-            const p = document.getElementById('userPass').value;
-            if(!e || !p) { showAuthAlert("Preencha e-mail e senha.", "error"); return; }
-            try {
-                type === 'signup' ? await createUserWithEmailAndPassword(auth, e, p) : await signInWithEmailAndPassword(auth, e, p);
-            } catch (err) {
-                let m = "Erro de acesso.";
-                if(err.code === 'auth/email-already-in-use') m = "E-mail já cadastrado.";
-                if(err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') m = "Credenciais incorretas.";
-                showAuthAlert(m, "error");
-            }
-        };
-
-        window.logout = () => signOut(auth);
-
-        onAuthStateChanged(auth, user => {
-            const isAdmin = user?.email === ADMIN_EMAIL;
-            document.querySelectorAll('.admin-only').forEach(el => el.style.display = isAdmin ? 'block' : 'table-cell');
-            document.getElementById('link-admin').style.display = isAdmin ? 'block' : 'none';
-            if(user) {
-                document.getElementById('auth-area').style.display = 'none';
-                document.getElementById('checklist-area').style.display = 'block';
-                loadChecklist(user.uid);
-            } else {
-                document.getElementById('auth-area').style.display = 'block';
-                document.getElementById('checklist-area').style.display = 'none';
-            }
-        });
-
         async function loadChecklist(uid) {
             const div = document.getElementById('items-list');
             const snap = await getDoc(doc(db, "checklists", uid));
             const data = snap.exists() ? snap.data() : {};
             div.innerHTML = "";
-            for (const [cat, itens] of Object.entries(enxovalCompleto)) {
-                const h = document.createElement('div'); h.className = 'category-title'; h.innerText = cat; div.appendChild(h);
+            for (const [cat, itens] of Object.entries(enxoval)) {
+                div.innerHTML += `<div class="category-title">${cat}</div>`;
                 itens.forEach(i => {
-                    const d = document.createElement('div'); d.className = 'checklist-item';
-                    d.innerHTML = `<input type="checkbox" ${data[i] ? 'checked' : ''} onchange="saveItem('${uid}','${i}',this.checked)"><span>${i}</span>`;
-                    div.appendChild(d);
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'checklist-item';
+                    itemDiv.innerHTML = `<input type="checkbox" style="width:20px; height:20px; margin:0" ${data[i] ? 'checked' : ''} onchange="saveItem('${uid}','${i}',this.checked)"><span>${i}</span>`;
+                    div.appendChild(itemDiv);
                 });
             }
         }
