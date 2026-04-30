@@ -88,6 +88,7 @@
         <div class="logo"><i class="fa-solid fa-shield-halved"></i> POLO CASTANHAL T3</div>
         <div class="nav-links">
             <a onclick="showSlide('home')" id="link-home" class="active">Painel</a>
+            <a onclick="showSlide('taf')" id="link-taf">Índices TAF</a>
             <a onclick="showSlide('lista')" id="link-lista">Efetivo</a>
             <a onclick="showSlide('checklist')" id="link-checklist">Enxoval</a>
             <a onclick="showSlide('admin')" id="link-admin" class="admin-only">Gestão</a>
@@ -102,6 +103,40 @@
         <div class="card">
             <h2 style="font-weight: 800; color: var(--bombeiro-dourado); margin-top: 0;">Informativo Oficial</h2>
             <p>O checklist abaixo foi atualizado conforme o novo documento oficial (ENXOVAL CFP BM 2026.pdf), contendo todos os itens e quantidades exigidas para cada etapa.</p>
+        </div>
+    </div>
+
+    
+    <!-- ÍNDICES TAF -->
+    <div id="slide-taf" class="slide-container">
+        <div class="card">
+            <h2 style="color: var(--bombeiro-dourado); text-align: center; margin-bottom: 25px;">
+                <i class="fa-solid fa-chart-line"></i> Tabela de Índices e Notas TAF
+            </h2>
+            
+            <div style="display: flex; gap: 10px; margin-bottom: 25px; justify-content: center;">
+                <button onclick="switchTaf('masc')" id="btn-taf-masc" class="btn-primary" style="width: auto; padding: 10px 25px;">Masculino</button>
+                <button onclick="switchTaf('fem')" id="btn-taf-fem" class="btn-primary" style="width: auto; padding: 10px 25px; opacity: 0.5;">Feminino</button>
+            </div>
+
+            <div class="table-wrapper" style="overflow-x: auto; border-radius: 15px; background: rgba(0,0,0,0.2);">
+                <table id="taf-table" style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                    <thead>
+                        <tr style="background: rgba(206, 32, 41, 0.2); color: var(--bombeiro-dourado);">
+                            <th style="padding: 12px; border-bottom: 2px solid var(--bombeiro-vermelho);">Nota</th>
+                            <th style="padding: 12px; border-bottom: 2px solid var(--bombeiro-vermelho);">C. 12min</th>
+                            <th style="padding: 12px; border-bottom: 2px solid var(--bombeiro-vermelho);">C. 50m</th>
+                            <th style="padding: 12px; border-bottom: 2px solid var(--bombeiro-vermelho);">Abd</th>
+                            <th style="padding: 12px; border-bottom: 2px solid var(--bombeiro-vermelho);">Flex</th>
+                            <th id="th-barra" style="padding: 12px; border-bottom: 2px solid var(--bombeiro-vermelho);">Barra</th>
+                            <th style="padding: 12px; border-bottom: 2px solid var(--bombeiro-vermelho);">Nat</th>
+                        </tr>
+                    </thead>
+                    <tbody id="taf-tbody" style="text-align: center;">
+                        <!-- Injetado via JS -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
