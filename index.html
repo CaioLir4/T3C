@@ -28,37 +28,49 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
         nav {
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255,255,255,0.1);
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            padding: 15px 40px;
+            padding: 15px 20px;
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 1000;
         }
 
-        .logo { font-weight: 700; font-size: 20px; color: var(--bombeiro-vermelho); letter-spacing: 1px; }
-        .nav-links { display: flex; gap: 30px; }
+        @media (min-width: 768px) {
+            nav { flex-direction: row; justify-content: space-between; padding: 15px 40px; }
+        }
+
+        .logo { font-weight: 700; font-size: 18px; color: var(--bombeiro-vermelho); letter-spacing: 1px; margin-bottom: 10px; }
+        @media (min-width: 768px) { .logo { margin-bottom: 0; font-size: 20px; } }
+
+        .nav-links { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+        @media (min-width: 768px) { .nav-links { gap: 30px; } }
+
         .nav-links a {
             color: var(--text-dim);
             cursor: pointer;
             font-weight: 500;
             text-decoration: none;
             transition: 0.3s;
+            font-size: 14px;
         }
         .nav-links a.active, .nav-links a:hover { color: var(--bombeiro-dourado); }
 
         .slide-container {
             display: none;
             min-height: 100vh;
-            padding: 100px 40px 40px;
+            padding: 140px 20px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
             width: 100%;
             animation: fadeIn 0.4s ease-in-out;
         }
@@ -68,32 +80,37 @@
         .card {
             background: var(--card-dark);
             border-radius: 20px;
-            padding: 30px;
+            padding: 20px;
             border: 1px solid rgba(255,255,255,0.05);
             margin-bottom: 20px;
         }
+        @media (min-width: 768px) { .card { padding: 30px; } }
 
-        .hero-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .hero-section { display: flex; flex-direction: column; gap: 30px; }
+        @media (min-width: 992px) { .hero-section { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; } }
+
         .timer-card {
             background: linear-gradient(135deg, var(--bombeiro-vermelho), #8b0000);
             border-radius: 24px;
-            padding: 40px;
+            padding: 30px;
             text-align: center;
         }
-        .timer-value { font-size: 60px; font-weight: 700; display: block; }
+        .timer-value { font-size: clamp(40px, 8vw, 70px); font-weight: 700; display: block; line-height: 1; }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th { text-align: left; color: var(--bombeiro-dourado); padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        td { padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 450px; }
+        th { text-align: left; color: var(--bombeiro-dourado); padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 14px; }
+        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
 
         .search-bar {
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             border-radius: 12px;
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
             color: white;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: 16px;
         }
 
         input {
@@ -104,52 +121,60 @@
             border: 1px solid rgba(255,255,255,0.1);
             background: #0f172a;
             color: white;
+            font-size: 16px;
         }
 
         button {
             background: var(--bombeiro-vermelho);
             color: white;
             border: none;
-            padding: 12px 24px;
+            padding: 14px 20px;
             border-radius: 8px;
             font-weight: 700;
             cursor: pointer;
+            width: 100%;
             transition: 0.3s;
+            font-size: 16px;
         }
-        button:hover { opacity: 0.8; }
-
-        .btn-delete { background: #ef4444; padding: 6px 12px; font-size: 12px; }
-        .admin-only { display: none; }
-        .pos-tag { color: var(--bombeiro-dourado); font-weight: 700; }
+        button:hover { filter: brightness(1.1); }
 
         .checklist-item {
             background: rgba(255,255,255,0.03);
             margin-bottom: 8px;
-            padding: 12px;
-            border-radius: 10px;
+            padding: 15px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             gap: 15px;
         }
-
-        .alert-message {
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-size: 14px;
-            display: none;
-        }
-        .alert-error { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
-        .alert-success { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+        .checklist-item input[type="checkbox"] { width: 22px; height: 22px; margin-bottom: 0; cursor: pointer; }
 
         .category-title {
             color: var(--bombeiro-dourado);
-            margin-top: 20px;
-            margin-bottom: 10px;
+            margin: 25px 0 12px;
             border-left: 4px solid var(--bombeiro-vermelho);
-            padding-left: 10px;
-            font-size: 1.1em;
+            padding-left: 12px;
+            font-size: 16px;
+            font-weight: 700;
             text-transform: uppercase;
+        }
+
+        .alert-message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            text-align: center;
+        }
+        .alert-error { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .alert-success { background: rgba(34, 197, 94, 0.15); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.3); }
+
+        .img-hero {
+            background: url('https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&q=80&w=800') center/cover;
+            height: 250px;
+            border-radius: 20px;
+            border: 2px solid var(--bombeiro-dourado);
         }
     </style>
 </head>
@@ -160,8 +185,8 @@
         <div class="nav-links">
             <a onclick="showSlide('home')" id="link-home" class="active">Início</a>
             <a onclick="showSlide('lista')" id="link-lista">Lista T3</a>
-            <a onclick="showSlide('checklist')" id="link-checklist">Meu Enxoval</a>
-            <a onclick="showSlide('admin')" id="link-admin" class="admin-only">Painel ADM</a>
+            <a onclick="showSlide('checklist')" id="link-checklist">Enxoval</a>
+            <a onclick="showSlide('admin')" id="link-admin" class="admin-only" style="display:none">Painel ADM</a>
         </div>
     </nav>
 
@@ -169,30 +194,30 @@
     <div id="slide-home" class="slide-container active">
         <div class="hero-section">
             <div>
-                <h1>Gestão de Efetivo <span style="color:var(--bombeiro-vermelho)">T3</span></h1>
-                <p style="color: var(--text-dim);">Plataforma oficial para controle de enxoval e consulta de antiguidade do Polo Castanhal.</p>
-                <div class="timer-card" style="margin-top: 30px;">
+                <h1 style="font-size: clamp(28px, 5vw, 48px);">Gestão de Efetivo <span style="color:var(--bombeiro-vermelho)">T3</span></h1>
+                <p style="color: var(--text-dim); margin: 20px 0;">Plataforma oficial para controle de enxoval e consulta de antiguidade do Polo Castanhal (CBMPA 2026).</p>
+                <div class="timer-card">
                     <span class="timer-value" id="days-timer">000</span>
-                    <span style="letter-spacing: 2px;">DIAS PARA O CFP</span>
+                    <span style="letter-spacing: 2px; font-weight: 700; font-size: 14px;">DIAS PARA O CFP</span>
                 </div>
             </div>
-            <div style="background: url('https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&q=80&w=500') center; height: 300px; border-radius: 20px; border: 2px solid var(--bombeiro-dourado);"></div>
+            <div class="img-hero"></div>
         </div>
     </div>
 
     <!-- LISTA T3 -->
     <div id="slide-lista" class="slide-container">
         <div class="card">
-            <h2><i class="fa-solid fa-list-ol"></i> Lista de Colocados</h2>
+            <h2 style="margin-bottom: 20px;"><i class="fa-solid fa-list-ol"></i> Lista de Colocados</h2>
             <input type="text" id="searchAlunos" class="search-bar" placeholder="Pesquisar por nome...">
-            <div style="max-height: 500px; overflow-y: auto;">
+            <div class="table-responsive">
                 <table>
                     <thead>
                         <tr>
                             <th>Nº</th>
                             <th>Nome do Aluno</th>
                             <th>Posição</th>
-                            <th class="admin-only">Ações</th>
+                            <th class="admin-only" style="display:none">Ação</th>
                         </tr>
                     </thead>
                     <tbody id="alunoTableBody"></tbody>
@@ -203,20 +228,21 @@
 
     <!-- MEU CHECKLIST -->
     <div id="slide-checklist" class="slide-container">
-        <div id="auth-area" style="max-width: 400px; margin: 0 auto; text-align: center;">
+        <div id="auth-area" style="max-width: 450px; margin: 0 auto; width: 100%;">
             <div class="card">
-                <h3>Acesso do Aluno</h3>
+                <h3 style="text-align:center; margin-bottom: 20px;">Acesso do Aluno</h3>
                 <div id="auth-alert" class="alert-message"></div>
                 <input type="email" id="userEmail" placeholder="E-mail">
                 <input type="password" id="userPass" placeholder="Senha">
-                <button onclick="handleAuth('login')" style="width: 100%;">Entrar</button>
-                <button onclick="handleAuth('signup')" style="background: #475569; width: 100%; margin-top: 10px;">Criar Conta</button>
+                <button onclick="handleAuth('login')">Entrar</button>
+                <p style="text-align:center; margin: 15px 0 5px; font-size: 14px; color: var(--text-dim);">Novo por aqui?</p>
+                <button onclick="handleAuth('signup')" style="background: #475569; padding: 10px;">Criar Minha Conta</button>
             </div>
         </div>
         <div id="checklist-area" style="display: none;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2>Meu Enxoval Individual (CBMPA 2026)</h2>
-                <button onclick="logout()" style="background: #334155; padding: 8px 15px;">Sair</button>
+            <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px;">
+                <h2 style="margin:0">Meu Enxoval (2026)</h2>
+                <button onclick="logout()" style="background: #334155; padding: 10px; width: fit-content; font-size: 14px;">Sair da Conta</button>
             </div>
             <div id="items-list"></div>
         </div>
@@ -225,13 +251,13 @@
     <!-- PAINEL ADM -->
     <div id="slide-admin" class="slide-container">
         <div class="card">
-            <h2><i class="fa-solid fa-unlock-keyhole"></i> Painel do Administrador</h2>
-            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
-                <h4>Adicionar Novo Aluno na Lista</h4>
-                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
-                    <input type="text" id="admNome" placeholder="Nome Completo">
-                    <input type="number" id="admPos" placeholder="Posição Geral">
-                    <button onclick="adicionarAluno()">Salvar</button>
+            <h2><i class="fa-solid fa-user-shield"></i> Área Administrativa</h2>
+            <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 15px; border: 1px dashed var(--bombeiro-vermelho);">
+                <h4 style="margin-top:0">Novo Aluno</h4>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <input type="text" id="admNome" placeholder="Nome Completo" style="margin:0">
+                    <input type="number" id="admPos" placeholder="Posição Geral" style="margin:0">
+                    <button onclick="adicionarAluno()">Cadastrar na Lista</button>
                 </div>
             </div>
         </div>
@@ -258,64 +284,14 @@
         const ADMIN_EMAIL = "caiodevanalista@gmail.com";
 
         const enxovalCompleto = {
-            "Semana de Adaptação - 6ºD (Trânsito)": [
-                "Calça jeans azul escura (Mín: 2, Rec: 3)",
-                "Camisa branca (Mín: 2, Rec: 4)",
-                "Cinto preto (Mín: 1, Rec: 1)",
-                "Fivela preta (Mín: 1, Rec: 1)",
-                "Tênis preto (Mín: 1, Rec: 2)",
-                "Meia branca (Mín: 2, Rec: 8)"
-            ],
-            "Semana de Adaptação - 6ºC (Interno)": [
-                "Gorro com pala cáqui (Mín: 1, Rec: 2)",
-                "Camisa malha vermelha gola polo bordada (Mín: 2, Rec: 5)",
-                "Calça jeans azul índigo (Mín: 2, Rec: 3)",
-                "Cinto cadarço vermelho com fivela dourada (Mín: 1, Rec: 1)",
-                "Meia esportiva branca cano médio (Mín: 3, Rec: 8)",
-                "Tênis preto (Mín: 1, Rec: 2)"
-            ],
-            "Educação Física Militar (5ºA)": [
-                "Camisa dry fit branca bordada (Mín: 3, Rec: 5)",
-                "Short educação física vermelho (Mín: 3, Rec: 5)",
-                "Sandália de dedo preta (Mín: 1, Rec: 1)",
-                "Sunga preta (Mín: 2, Rec: 3)"
-            ],
-            "Kit Higiene, Cama e Banho": [
-                "Kit Higiene (Creme, Escova, Sabonete, Protetor, etc)",
-                "Lençol de cama branco oxford liso solteiro (Mín: 1, Rec: 1)",
-                "Cobertor de colchão branco com elástico (Mín: 1, Rec: 1)",
-                "Toalha de banho vermelha (Mín: 2, Rec: 2)",
-                "Toalha de rosto vermelha (Mín: 2, Rec: 2)"
-            ],
-            "Kit Operacional": [
-                "Bolsa preta mochila mín 30L (Rec: 55L)",
-                "Cantil preto 1L com porta cantil",
-                "6m Cabo da vida laranja 12mm",
-                "Cinto N.A vermelho ilhós pretos",
-                "Lanterna pequena de mão"
-            ],
-            "Kit Manutenção de Uniforme": [
-                "Ferro de passar roupa",
-                "Agulha e linha",
-                "Graxa preta",
-                "Aparelho de barbear",
-                "Escova para sapato"
-            ],
-            "Kit Material Escrevente": [
-                "Bloco de anotações de bolso",
-                "Caneta esferográfica (4 unidades)",
-                "Lápis (2 unidades) e Borracha",
-                "Caderno matérias vermelho encapado CFAE"
-            ],
-            "Aula Magna / Social": [
-                "Terno preto liso",
-                "Camisa social branca",
-                "Gravata vertical",
-                "Calça preta social lisa",
-                "Cinto social preto",
-                "Sapato social preto",
-                "Meia social preta"
-            ]
+            "Adaptação 6ºD (Trânsito)": ["Calça jeans azul escura (Mín: 2)", "Camisa branca (Mín: 2)", "Cinto preto", "Fivela preta", "Tênis preto", "Meia branca"],
+            "Adaptação 6ºC (Interno)": ["Gorro cáqui", "Polo vermelha bordada", "Calça jeans índigo", "Cinto vermelho/fivela dourada", "Meia branca cano médio", "Tênis preto"],
+            "Educação Física (5ºA)": ["Camisa dry fit branca bordada", "Short vermelho", "Sandália preta", "Sunga preta"],
+            "Higiene e Cama": ["Kit Higiene Completo", "Lençol branco solteiro", "Cobertor colchão branco", "Toalha banho vermelha", "Toalha rosto vermelha"],
+            "Kit Operacional": ["Mochila preta (Min 30L)", "Cantil 1L", "6m Cabo da vida 12mm", "Cinto N.A vermelho", "Lanterna"],
+            "Manutenção": ["Ferro de passar", "Agulha/Linha", "Graxa preta", "Aparelho barbear", "Escova sapato"],
+            "Material Escrevente": ["Bloco bolso", "Canetas (4x)", "Lápis/Borracha", "Caderno CFAE encapado"],
+            "Aula Magna (Social)": ["Terno preto", "Camisa branca social", "Gravata vertical", "Sapato social preto", "Meia social preta"]
         };
 
         window.showSlide = (id) => {
@@ -323,6 +299,7 @@
             document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
             document.getElementById('slide-' + id).classList.add('active');
             document.getElementById('link-' + id).classList.add('active');
+            window.scrollTo(0,0);
         };
 
         onSnapshot(query(collection(db, "alunos_lista"), orderBy("posicao", "asc")), (snapshot) => {
@@ -336,45 +313,40 @@
                     <tr>
                         <td>${contador}º</td>
                         <td><strong>${a.nome}</strong></td>
-                        <td class="pos-tag">${a.posicao}º</td>
-                        <td class="admin-only" style="display: ${isAdmin ? 'table-cell' : 'none'}">
-                            <button class="btn-delete" onclick="removerAluno('${docSnap.id}')">Excluir</button>
-                        </td>
+                        <td style="color:#f1c40f; font-weight:700">${a.posicao}º</td>
+                        ${isAdmin ? `<td class="admin-only"><button onclick="removerAluno('${docSnap.id}')" style="background:#ef4444; width:auto; padding:5px 10px; font-size:12px">X</button></td>` : ''}
                     </tr>`;
                 contador++;
             });
         });
 
         window.adicionarAluno = async () => {
-            const nome = document.getElementById('admNome').value;
-            const pos = parseInt(document.getElementById('admPos').value);
-            if (nome && pos) {
-                await addDoc(collection(db, "alunos_lista"), { nome: nome, posicao: pos });
+            const n = document.getElementById('admNome').value;
+            const p = parseInt(document.getElementById('admPos').value);
+            if(n && p) {
+                await addDoc(collection(db, "alunos_lista"), { nome: n, posicao: p });
                 document.getElementById('admNome').value = ""; document.getElementById('admPos').value = "";
             }
         };
 
-        window.removerAluno = async (id) => { if(confirm("Remover aluno?")) await deleteDoc(doc(db, "alunos_lista", id)); };
+        window.removerAluno = async (id) => { if(confirm("Excluir?")) await deleteDoc(doc(db, "alunos_lista", id)); };
 
         const showAuthAlert = (msg, type) => {
-            const alert = document.getElementById('auth-alert');
-            alert.innerText = msg;
-            alert.className = `alert-message ${type === 'error' ? 'alert-error' : 'alert-success'}`;
-            alert.style.display = 'block';
-            setTimeout(() => { alert.style.display = 'none'; }, 5000);
+            const a = document.getElementById('auth-alert');
+            a.innerText = msg; a.className = `alert-message ${type === 'error' ? 'alert-error' : 'alert-success'}`;
+            a.style.display = 'block'; setTimeout(() => a.style.display = 'none', 4000);
         };
 
         window.handleAuth = async (type) => {
-            const email = document.getElementById('userEmail').value;
-            const pass = document.getElementById('userPass').value;
-            if (!email || !pass) { showAuthAlert("Preencha todos os campos.", "error"); return; }
+            const e = document.getElementById('userEmail').value;
+            const p = document.getElementById('userPass').value;
+            if(!e || !p) { showAuthAlert("Preencha e-mail e senha.", "error"); return; }
             try {
-                if (type === 'signup') { await createUserWithEmailAndPassword(auth, email, pass); showAuthAlert("Conta criada!", "success"); }
-                else { await signInWithEmailAndPassword(auth, email, pass); }
-            } catch (error) {
-                let m = "Erro no acesso.";
-                if(error.code === 'auth/email-already-in-use') m = "E-mail já cadastrado.";
-                if(error.code === 'auth/wrong-password') m = "Senha incorreta.";
+                type === 'signup' ? await createUserWithEmailAndPassword(auth, e, p) : await signInWithEmailAndPassword(auth, e, p);
+            } catch (err) {
+                let m = "Erro de acesso.";
+                if(err.code === 'auth/email-already-in-use') m = "E-mail já cadastrado.";
+                if(err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') m = "Credenciais incorretas.";
                 showAuthAlert(m, "error");
             }
         };
@@ -383,8 +355,9 @@
 
         onAuthStateChanged(auth, user => {
             const isAdmin = user?.email === ADMIN_EMAIL;
-            document.querySelectorAll('.admin-only').forEach(el => el.style.display = isAdmin ? 'block' : 'none');
-            if (user) {
+            document.querySelectorAll('.admin-only').forEach(el => el.style.display = isAdmin ? 'block' : 'table-cell');
+            document.getElementById('link-admin').style.display = isAdmin ? 'block' : 'none';
+            if(user) {
                 document.getElementById('auth-area').style.display = 'none';
                 document.getElementById('checklist-area').style.display = 'block';
                 loadChecklist(user.uid);
@@ -396,28 +369,24 @@
 
         async function loadChecklist(uid) {
             const div = document.getElementById('items-list');
-            const docSnap = await getDoc(doc(db, "checklists", uid));
-            const data = docSnap.exists() ? docSnap.data() : {};
+            const snap = await getDoc(doc(db, "checklists", uid));
+            const data = snap.exists() ? snap.data() : {};
             div.innerHTML = "";
-            for (const [categoria, itens] of Object.entries(enxovalCompleto)) {
-                const catTitle = document.createElement('div');
-                catTitle.className = 'category-title';
-                catTitle.innerText = categoria;
-                div.appendChild(catTitle);
-                itens.forEach(item => {
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'checklist-item';
-                    itemDiv.innerHTML = `<input type="checkbox" ${data[item] ? 'checked' : ''} onchange="saveItem('${uid}','${item}',this.checked)"><span>${item}</span>`;
-                    div.appendChild(itemDiv);
+            for (const [cat, itens] of Object.entries(enxovalCompleto)) {
+                const h = document.createElement('div'); h.className = 'category-title'; h.innerText = cat; div.appendChild(h);
+                itens.forEach(i => {
+                    const d = document.createElement('div'); d.className = 'checklist-item';
+                    d.innerHTML = `<input type="checkbox" ${data[i] ? 'checked' : ''} onchange="saveItem('${uid}','${i}',this.checked)"><span>${i}</span>`;
+                    div.appendChild(d);
                 });
             }
         }
 
-        window.saveItem = async (uid, item, status) => { await setDoc(doc(db, "checklists", uid), { [item]: status }, { merge: true }); };
+        window.saveItem = async (uid, i, s) => { await setDoc(doc(db, "checklists", uid), { [i]: s }, { merge: true }); };
 
         setInterval(() => {
             const diff = new Date("July 01, 2026").getTime() - new Date().getTime();
-            document.getElementById('days-timer').innerText = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
+            document.getElementById('days-timer').innerText = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24))).toString().padStart(3, '0');
         }, 1000);
     </script>
 </body>
