@@ -107,7 +107,7 @@
     </div>
 
     
-    <!-- TABELAS TAF COMPLETAS -->
+    <!-- ÍNDICES TAF COMPLETOS -->
     <div id="slide-taf" class="slide-container">
         <div class="card">
             <h2 style="color: var(--bombeiro-dourado); text-align: center; margin-bottom: 25px;">
@@ -133,13 +133,10 @@
                         </tr>
                     </thead>
                     <tbody id="taf-tbody" style="text-align: center;">
-                        <!-- Gerado por JS -->
+                        <!-- JS inject -->
                     </tbody>
                 </table>
             </div>
-            <p style="font-size: 11px; color: var(--text-dim); text-align: center; margin-top: 15px; font-style: italic;">
-                * Dados baseados na tabela de pontuação oficial CFP 2026.
-            </p>
         </div>
     </div>
 
@@ -394,36 +391,33 @@
             document.getElementById('days-timer').innerText = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24))).toString().padStart(3, '0');
         }, 1000);
     
+        // LÓGICA TAF ADICIONADA
         const TAF_MASC = [{"nota": 10, "corrida12": 3200, "corrida50": 6.8, "abdominal": 54, "flexao": 48, "barra": 16, "natacao": 35}, {"nota": 9.75, "corrida12": 3150, "corrida50": 6.9, "abdominal": 53, "flexao": 47, "barra": null, "natacao": 36}, {"nota": 9.5, "corrida12": 3100, "corrida50": 7.0, "abdominal": 52, "flexao": 46, "barra": 15, "natacao": 37}, {"nota": 9.25, "corrida12": 3050, "corrida50": 7.1, "abdominal": 51, "flexao": 45, "barra": null, "natacao": 38}, {"nota": 9, "corrida12": 3000, "corrida50": 7.2, "abdominal": 50, "flexao": 44, "barra": 14, "natacao": 39}, {"nota": 8.75, "corrida12": 2950, "corrida50": 7.3, "abdominal": 49, "flexao": 43, "barra": null, "natacao": 40}, {"nota": 8.5, "corrida12": 2900, "corrida50": 7.4, "abdominal": 48, "flexao": 42, "barra": 13, "natacao": 41}, {"nota": 8.25, "corrida12": 2850, "corrida50": 7.5, "abdominal": 47, "flexao": 41, "barra": null, "natacao": 42}, {"nota": 8, "corrida12": 2800, "corrida50": 7.6, "abdominal": 46, "flexao": 40, "barra": 12, "natacao": 43}, {"nota": 7.75, "corrida12": 2750, "corrida50": 7.7, "abdominal": 45, "flexao": 39, "barra": null, "natacao": 44}, {"nota": 7.5, "corrida12": 2700, "corrida50": 7.8, "abdominal": 44, "flexao": 38, "barra": 11, "natacao": 45}, {"nota": 7.25, "corrida12": 2650, "corrida50": 7.9, "abdominal": 43, "flexao": 37, "barra": null, "natacao": 46}, {"nota": 7, "corrida12": 2600, "corrida50": 8.0, "abdominal": 42, "flexao": 36, "barra": 10, "natacao": 47}, {"nota": 6.75, "corrida12": 2550, "corrida50": 8.1, "abdominal": 41, "flexao": 35, "barra": null, "natacao": 48}, {"nota": 6.5, "corrida12": 2500, "corrida50": 8.2, "abdominal": 40, "flexao": 34, "barra": 9, "natacao": 49}, {"nota": 6.25, "corrida12": 2450, "corrida50": 8.3, "abdominal": 39, "flexao": 33, "barra": null, "natacao": 50}, {"nota": 6, "corrida12": 2400, "corrida50": 8.4, "abdominal": 38, "flexao": 32, "barra": 8, "natacao": 51}, {"nota": 5.75, "corrida12": 2350, "corrida50": 8.5, "abdominal": 37, "flexao": 31, "barra": null, "natacao": 52}, {"nota": 5.5, "corrida12": 2300, "corrida50": 8.6, "abdominal": 36, "flexao": 30, "barra": 7, "natacao": 53}, {"nota": 5.25, "corrida12": 2250, "corrida50": 8.7, "abdominal": 35, "flexao": 29, "barra": null, "natacao": 54}, {"nota": 5, "corrida12": 2200, "corrida50": 8.8, "abdominal": 34, "flexao": 28, "barra": 6, "natacao": 55}, {"nota": 4.75, "corrida12": 2150, "corrida50": 8.9, "abdominal": 33, "flexao": 27, "barra": null, "natacao": 56}, {"nota": 4.5, "corrida12": 2100, "corrida50": 9.0, "abdominal": 32, "flexao": 26, "barra": 5, "natacao": 57}, {"nota": 4.25, "corrida12": 2050, "corrida50": 9.1, "abdominal": 31, "flexao": 25, "barra": null, "natacao": 58}, {"nota": 4, "corrida12": 2000, "corrida50": 9.2, "abdominal": 30, "flexao": 24, "barra": 4, "natacao": 59}, {"nota": 3.75, "corrida12": 1950, "corrida50": 9.3, "abdominal": 29, "flexao": 23, "barra": null, "natacao": 60}, {"nota": 3.5, "corrida12": 1900, "corrida50": 9.4, "abdominal": 28, "flexao": 22, "barra": 3, "natacao": 61}, {"nota": 3.25, "corrida12": 1850, "corrida50": 9.5, "abdominal": 27, "flexao": 21, "barra": null, "natacao": 62}, {"nota": 3, "corrida12": 1800, "corrida50": 9.6, "abdominal": 26, "flexao": 20, "barra": null, "natacao": 63}, {"nota": 2.75, "corrida12": 1750, "corrida50": 9.7, "abdominal": 25, "flexao": 19, "barra": null, "natacao": 64}, {"nota": 2.5, "corrida12": 1700, "corrida50": 9.8, "abdominal": 24, "flexao": 18, "barra": null, "natacao": 65}, {"nota": 2.25, "corrida12": 1650, "corrida50": 9.9, "abdominal": 23, "flexao": 17, "barra": null, "natacao": 66}, {"nota": 2, "corrida12": 1600, "corrida50": 10.0, "abdominal": 22, "flexao": 16, "barra": null, "natacao": 67}, {"nota": 1.75, "corrida12": 1550, "corrida50": 10.1, "abdominal": 21, "flexao": 15, "barra": null, "natacao": 68}, {"nota": 1.5, "corrida12": 1500, "corrida50": 10.2, "abdominal": 20, "flexao": 14, "barra": null, "natacao": 69}, {"nota": 1.25, "corrida12": 1450, "corrida50": 10.3, "abdominal": 19, "flexao": 13, "barra": null, "natacao": 70}, {"nota": 1, "corrida12": 1400, "corrida50": 10.4, "abdominal": 18, "flexao": 12, "barra": null, "natacao": 71}, {"nota": 0.75, "corrida12": 1350, "corrida50": 10.5, "abdominal": 17, "flexao": 11, "barra": null, "natacao": 72}, {"nota": 0.5, "corrida12": 1300, "corrida50": 10.6, "abdominal": 16, "flexao": 10, "barra": null, "natacao": 73}, {"nota": 0.25, "corrida12": 1250, "corrida50": 10.7, "abdominal": 15, "flexao": 9, "barra": null, "natacao": 74}, {"nota": 0, "corrida12": 1200, "corrida50": 10.8, "abdominal": 14, "flexao": 8, "barra": "<3", "natacao": 75}];
         const TAF_FEM = [{"nota": 10, "corrida12": 2800, "corrida50": 7.8, "abdominal": 46, "flexao": 22, "barra": "+28s", "natacao": 40}, {"nota": 9.75, "corrida12": 2750, "corrida50": 7.9, "abdominal": 45, "flexao": 21, "barra": null, "natacao": 41}, {"nota": 9.5, "corrida12": 2700, "corrida50": 8.0, "abdominal": 44, "flexao": 20, "barra": "26-27s", "natacao": 42}, {"nota": 9.25, "corrida12": 2650, "corrida50": 8.1, "abdominal": 43, "flexao": 19, "barra": null, "natacao": 43}, {"nota": 9, "corrida12": 2600, "corrida50": 8.2, "abdominal": 42, "flexao": 18, "barra": "24-25s", "natacao": 44}, {"nota": 8.75, "corrida12": 2550, "corrida50": 8.3, "abdominal": 41, "flexao": 17, "barra": null, "natacao": 45}, {"nota": 8.5, "corrida12": 2500, "corrida50": 8.4, "abdominal": 40, "flexao": 16, "barra": "22-23s", "natacao": 46}, {"nota": 8.25, "corrida12": 2450, "corrida50": 8.5, "abdominal": 39, "flexao": 15, "barra": null, "natacao": 47}, {"nota": 8, "corrida12": 2400, "corrida50": 8.6, "abdominal": 38, "flexao": 14, "barra": "20-21s", "natacao": 48}, {"nota": 7.75, "corrida12": 2350, "corrida50": 8.7, "abdominal": 37, "flexao": 13, "barra": null, "natacao": 49}, {"nota": 7.5, "corrida12": 2300, "corrida50": 8.8, "abdominal": 36, "flexao": 12, "barra": "18-19s", "natacao": 50}, {"nota": 7.25, "corrida12": 2250, "corrida50": 8.9, "abdominal": 35, "flexao": 11, "barra": null, "natacao": 51}, {"nota": 7, "corrida12": 2200, "corrida50": 9.0, "abdominal": 34, "flexao": 10, "barra": "16-17s", "natacao": 52}, {"nota": 6.75, "corrida12": 2150, "corrida50": 9.1, "abdominal": 33, "flexao": 9, "barra": null, "natacao": 53}, {"nota": 6.5, "corrida12": 2100, "corrida50": 9.2, "abdominal": 32, "flexao": 8, "barra": "14-15s", "natacao": 54}, {"nota": 6.25, "corrida12": 2050, "corrida50": 9.3, "abdominal": 31, "flexao": 7, "barra": null, "natacao": 55}, {"nota": 6, "corrida12": 2000, "corrida50": 9.4, "abdominal": 30, "flexao": 6, "barra": "12-13s", "natacao": 56}, {"nota": 5.75, "corrida12": 1950, "corrida50": 9.5, "abdominal": 29, "flexao": null, "barra": null, "natacao": 57}, {"nota": 5.5, "corrida12": 1900, "corrida50": 9.6, "abdominal": 28, "flexao": null, "barra": "10-11s", "natacao": 58}, {"nota": 5.25, "corrida12": 1850, "corrida50": 9.7, "abdominal": 27, "flexao": null, "barra": null, "natacao": 59}, {"nota": 5, "corrida12": 1800, "corrida50": 9.8, "abdominal": 26, "flexao": 5, "barra": "8-9s", "natacao": 60}, {"nota": 4.75, "corrida12": 1750, "corrida50": 9.9, "abdominal": 25, "flexao": null, "barra": null, "natacao": 61}, {"nota": 4.5, "corrida12": 1700, "corrida50": 10.0, "abdominal": 24, "flexao": null, "barra": "6-7s", "natacao": 62}, {"nota": 4.25, "corrida12": 1650, "corrida50": 10.1, "abdominal": 23, "flexao": null, "barra": null, "natacao": 63}, {"nota": 4, "corrida12": 1600, "corrida50": 10.2, "abdominal": 22, "flexao": 4, "barra": "4-5s", "natacao": 64}, {"nota": 3.75, "corrida12": 1550, "corrida50": 10.3, "abdominal": 21, "flexao": null, "barra": null, "natacao": 65}, {"nota": 3.5, "corrida12": 1500, "corrida50": 10.4, "abdominal": 20, "flexao": null, "barra": "3s", "natacao": 66}, {"nota": 3.25, "corrida12": 1450, "corrida50": 10.5, "abdominal": 19, "flexao": null, "barra": null, "natacao": 67}, {"nota": 3, "corrida12": 1400, "corrida50": 10.6, "abdominal": 18, "flexao": 3, "barra": null, "natacao": 68}, {"nota": 2.75, "corrida12": 1350, "corrida50": 10.7, "abdominal": 17, "flexao": null, "barra": null, "natacao": 69}, {"nota": 2.5, "corrida12": 1300, "corrida50": 10.8, "abdominal": 16, "flexao": null, "barra": null, "natacao": 70}, {"nota": 2.25, "corrida12": 1250, "corrida50": 10.9, "abdominal": 15, "flexao": null, "barra": null, "natacao": 71}, {"nota": 2, "corrida12": 1200, "corrida50": 11.0, "abdominal": 14, "flexao": 2, "barra": null, "natacao": 72}, {"nota": 1.75, "corrida12": 1150, "corrida50": 11.1, "abdominal": 13, "flexao": null, "barra": null, "natacao": 73}, {"nota": 1.5, "corrida12": 1100, "corrida50": 11.2, "abdominal": 12, "flexao": null, "barra": null, "natacao": 74}];
 
         window.switchTaf = (gender) => {
             const tbody = document.getElementById('taf-tbody');
+            if(!tbody) return;
             const thBarra = document.getElementById('th-barra');
             const data = gender === 'masc' ? TAF_MASC : TAF_FEM;
-            
             document.getElementById('btn-taf-masc').style.opacity = gender === 'masc' ? '1' : '0.5';
             document.getElementById('btn-taf-fem').style.opacity = gender === 'fem' ? '1' : '0.5';
             thBarra.innerText = gender === 'masc' ? 'Barra' : 'Barra (Sus)';
-
             tbody.innerHTML = data.map(row => {
-                // Destacar notas azuis (>= 5) e vermelhas (< 5)
                 const notaColor = row.nota >= 5 ? 'var(--bombeiro-dourado)' : '#ef4444';
                 return `
-                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03); background: ${row.nota % 1 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent'}">
-                        <td style="padding: 12px; font-weight: 800; color: ${notaColor};">${row.nota}</td>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                        <td style="padding: 10px; font-weight: 800; color: ${notaColor};">${row.nota}</td>
                         <td>${row.corrida12}m</td>
                         <td>${row.corrida50}s</td>
                         <td>${row.abdominal}</td>
                         <td>${row.flexao || '-'}</td>
                         <td>${row.barra || '-'}</td>
                         <td>${row.natacao}s</td>
-                    </tr>
-                `;
+                    </tr>`;
             }).join('');
         };
-        
-        switchTaf('masc');
+        setTimeout(() => switchTaf('masc'), 500); // Delay pequeno para garantir carregamento do DOM
 
     </script>
 </body>
