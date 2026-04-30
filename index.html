@@ -96,6 +96,28 @@
     </nav>
 
     <div id="slide-home" class="slide-container active">
+
+    <div class="card" style="border: 2px solid var(--bombeiro-dourado); background: rgba(15, 23, 42, 0.95); padding: 0; overflow: hidden; margin-bottom: 30px;">
+        <div style="background: var(--bombeiro-vermelho); color: white; padding: 12px; text-align: center; font-weight: 800; font-size: 16px;">
+            🚨 ATENÇÃO ALUNOS: O GROSSO ESTÁ CHEGANDO!
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; padding: 25px; gap: 20px;">
+            <div style="width: 100%; max-width: 450px; border-radius: 15px; overflow: hidden; box-shadow: var(--glow);">
+                <img src="IMG-20260430-WA0000.jpg" alt="Aviso Oficial" style="width: 100%; display: block;">
+            </div>
+            <div style="width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
+                <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; border-left: 4px solid var(--bombeiro-dourado);">
+                    <span style="color: var(--bombeiro-dourado); font-weight: 800; display: block; font-size: 10px;">HABILITAÇÃO</span>
+                    <span style="font-size: 15px;">4 a 8 de maio</span>
+                </div>
+                <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; border-left: 4px solid var(--bombeiro-dourado);">
+                    <span style="color: var(--bombeiro-dourado); font-weight: 800; display: block; font-size: 10px;">INCORPORAÇÃO</span>
+                    <span style="font-size: 15px;">30 de junho</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
         <div class="card" style="background: var(--accent-gradient); text-align: center; border: none;">
             <h1 id="days-timer" style="font-size: 80px; margin: 0; font-weight: 900; letter-spacing: -2px;">000</h1>
             <p style="text-transform: uppercase; font-weight: 800; letter-spacing: 4px; opacity: 0.9; margin-top: -10px;">Dias para a Apresentação</p>
@@ -426,20 +448,32 @@
         switchTaf('masc');
 
     
-        // CORREÇÃO DA BARRA DE PESQUISA
-        const inputBusca = document.getElementById('searchAlunos');
-        if (inputBusca) {
-            inputBusca.addEventListener('input', (e) => {
-                const termo = e.target.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-                const linhas = document.querySelectorAll('#alunoTableBody tr');
-                
-                linhas.forEach(linha => {
-                    const nome = linha.innerText.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-                    linha.style.display = nome.includes(termo) ? '' : 'none';
-                });
+    const searchInput = document.getElementById('searchAlunos');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+            const rows = document.querySelectorAll('#alunoTableBody tr');
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                row.style.display = text.includes(term) ? '' : 'none';
             });
-        }
+        });
+    }
 
-    </script>
+    const TAF_MASC = [{"nota": 10.0, "corrida12": 2800, "corrida50": 7.0, "abdominal": 50, "flexao": 40, "barra": 12, "natacao": 45}, {"nota": 5.0, "corrida12": 2300, "corrida50": 8.5, "abdominal": 30, "flexao": 20, "barra": 2, "natacao": 62}, {"nota": 0.0, "corrida12": 0, "corrida50": 10.0, "abdominal": 0, "flexao": 0, "barra": 0, "natacao": 99}];
+    const TAF_FEM = [{"nota": 10.0, "corrida12": 2400, "corrida50": 8.5, "abdominal": 45, "flexao": 30, "barra": 30, "natacao": 55}, {"nota": 5.0, "corrida12": 1900, "corrida50": 10.2, "abdominal": 25, "flexao": 10, "barra": 10, "natacao": 72}, {"nota": 0.0, "corrida12": 0, "corrida50": 12.0, "abdominal": 0, "flexao": 0, "barra": 0, "natacao": 99}];
+    window.switchTaf = (gender) => {
+        const tbody = document.getElementById('taf-tbody');
+        if (!tbody) return;
+        const data = gender === 'masc' ? TAF_MASC : TAF_FEM;
+        tbody.innerHTML = data.map(row => `
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                <td style="padding: 10px; font-weight: 800; color: ${row.nota >= 5 ? 'var(--bombeiro-dourado)' : '#ef4444'};">\${row.nota.toFixed(1)}</td>
+                <td>\${row.corrida12}m</td><td>\${row.corrida50}s</td><td>\${row.abdominal}</td><td>\${row.flexao}</td><td>\${row.barra}</td><td>\${row.natacao}s</td>
+            </tr>`).join('');
+    };
+    setTimeout(() => switchTaf('masc'), 500);
+
+</script>
 </body>
 </html>
