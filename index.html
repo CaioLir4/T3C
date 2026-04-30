@@ -258,74 +258,85 @@
 
         // DADOS INTEGRAIS CONFORME PDF (INCLUINDO REPETIÇÕES)
         const ENXOVAL_PDF = [
-            { cat: "SEMANA DE ADAPTAÇÃO - 6ºD (TRÂNSITO)", items: [
-                { id: "1", d: "Calça jeans azul escura", m: 2, r: 3 },
-                { id: "2", d: "Camisa branca", m: 2, r: 4 },
-                { id: "3", d: "Cinto preto", m: 1, r: 1 },
-                { id: "4", d: "Fivela preta", m: 1, r: 1 },
-                { id: "5", d: "Tênis preto", m: 1, r: 2 },
-                { id: "6", d: "Meia branca", m: 2, r: 8 }
-            ]},
-            { cat: "SEMANA DE ADAPTAÇÃO - 6ºC (INTERNO)", items: [
-                { id: "13", d: "Gorro com pala cáqui", m: 1, r: 2 },
-                { id: "14", d: "Camisa gola polo vermelha bordada (sem ID)", m: 2, r: 5 },
-                { id: "15", d: "Calça jean azul indigo", m: 2, r: 3 },
-                { id: "16", d: "Cinto cadarço vermelho (fivela dourada lisa)", m: 1, r: 1 },
-                { id: "17", d: "Meia esportiva branca, cano médio", m: 3, r: 8 },
-                { id: "18", d: "Tênis preto", m: 1, r: 2 }
-            ]},
-            { cat: "SEMANA DE ADAPTAÇÃO - 6ºC (TABELA COMPLEMENTAR)", items: [
-                { id: "7_rep", d: "Gorro com pala cáqui", m: 1, r: 2 },
-                { id: "8_rep", d: "Camisa vermelha com brasão bordado (sem ID)", m: 3, r: 5 },
-                { id: "9_rep", d: "Calça jeans azul índigo", m: 2, r: 3 },
-                { id: "10_rep", d: "Cinto cadarço vermelho (fivela dourada lisa)", m: 1, r: 1 },
-                { id: "11_rep", d: "Meia esportiva branca, cano médio", m: 3, r: 8 },
-                { id: "12_rep", d: "Tênis preto", m: 1, r: 2 }
-            ]},
-            { cat: "EDUCAÇÃO FÍSICA MILITAR - 5ºA (MASCULINO)", items: [
-                { id: "ef13", d: "Camisa dry fit branca bordada", m: 3, r: 5 },
-                { id: "ef14", d: "Short de educação física vermelho", m: 3, r: 5 },
-                { id: "ef15", d: "Sandália de dedo preta", m: 1, r: 1 },
-                { id: "ef16", d: "Sunga preta", m: 2, r: 3 }
-            ]},
-            { cat: "KIT HIGIENE E CAMA/BANHO", items: [
-                { id: "k26", d: "Creme dental, escova, fio, sabonete, desodorante, cortador e protetor solar", m: 1, r: 1 },
-                { id: "k17", d: "Lençol de cama branco (oxford, liso, solteiro)", m: 1, r: 1 },
-                { id: "k18", d: "Cobertor de colchão branco com elástico", m: 1, r: 1 },
-                { id: "k19", d: "Toalha de banho vermelha", m: 2, r: 2 },
-                { id: "k20", d: "Toalha de rosto vermelha", m: 2, r: 2 }
-            ]},
-            { cat: "KIT OPERACIONAL", items: [
-                { id: "op27", d: "Bolsa preta mochila mín 30L (Rec 55L)", m: 1, r: 1 },
-                { id: "op28", d: "Cantil preto 1L com porta cantil", m: 1, r: 1 },
-                { id: "op29", d: "6m Cabo da vida laranja (12mm)", m: 1, r: 1 },
-                { id: "op30", d: "Cinto N.A vermelho com ilhós pretos", m: 1, r: 1 },
-                { id: "op31", d: "Lanterna pequena de mão", m: 1, r: 1 }
-            ]},
-            { cat: "KIT MANUTENÇÃO DE UNIFORME", items: [
-                { id: "m21", d: "Ferro de passar roupa", m: 1, r: 1 },
-                { id: "m22", d: "Agulha e linha", m: 1, r: 1 },
-                { id: "m23", d: "Graxa preta", m: 1, r: 1 },
-                { id: "m24", d: "Aparelho de barbear", m: 1, r: 1 },
-                { id: "m25", d: "Escova para sapato", m: 1, r: 1 }
-            ]},
-            { cat: "KIT MATERIAL ESCREVENTE", items: [
-                { id: "e32", d: "Bloco de anotações de bolso", m: 1, r: 1 },
-                { id: "e33", d: "Caneta esferográfica", m: 4, r: 4 },
-                { id: "e34", d: "Lápis", m: 2, r: 2 },
-                { id: "e35", d: "Borracha", m: 1, r: 1 },
-                { id: "e36", d: "Caderno vermelho encapado (Brasão CFAE)", m: 2, r: 2 }
-            ]},
-            { cat: "AULA MAGNA (SOCIAL)", items: [
-                { id: "s37", d: "Terno preto liso", m: 1, r: 1 },
-                { id: "s38", d: "Camisa social branca", m: 1, r: 1 },
-                { id: "s39", d: "Gravata vertical", m: 1, r: 1 },
-                { id: "s40", d: "Calça preta social lisa", m: 1, r: 1 },
-                { id: "s41", d: "Cinto social preto", m: 1, r: 1 },
-                { id: "s42", d: "Sapato social preto", m: 1, r: 1 },
-                { id: "s43", d: "Meia social preta", m: 1, r: 1 }
-            ]}
-        ];
+  { cat: "SEMANA DE ADAPTAÇÃO - 6ºD (TRÂNSITO)", items: [
+    { id: "1", d: "Calça jeans azul escura", m: 2, r: 3 },
+    { id: "2", d: "Camisa branca", m: 2, r: 4 },
+    { id: "3", d: "Cinto preto", m: 1, r: 1 },
+    { id: "4", d: "Fivela preta", m: 1, r: 1 },
+    { id: "5", d: "Tênis preto", m: 1, r: 2 },
+    { id: "6", d: "Meia branca", m: 2, r: 8 }
+  ]},
+
+  { cat: "SEMANA DE ADAPTAÇÃO - 6ºC (INTERNO)", items: [
+    { id: "13", d: "Gorro com pala cáqui", m: 1, r: 2 },
+    { id: "14", d: "Camisa de malha meia manga vermelha gola polo com brasão do CBMPA bordado (sem identificação)", m: 2, r: 5 },
+    { id: "15", d: "Calça jean azul índigo", m: 2, r: 3 },
+    { id: "16", d: "Cinto cadarço vermelho com fivela na cor dourada (lisa sem brasão)", m: 1, r: 1 },
+    { id: "17", d: "Meia esportiva branca, cano médio", m: 3, r: 8 },
+    { id: "18", d: "Tênis preto", m: 1, r: 2 }
+  ]},
+
+  { cat: "SEMANA DE ADAPTAÇÃO - 6ºC (TABELA COMPLEMENTAR)", items: [
+    { id: "7", d: "Gorro com pala cáqui", m: 1, r: 2 },
+    { id: "8", d: "Camisa de malha meia manga vermelha com brasão do CBMPA bordado (sem identificação)", m: 3, r: 5 },
+    { id: "9", d: "Calça jeans azul índigo", m: 2, r: 3 },
+    { id: "10", d: "Cinto cadarço vermelho com fivela na cor dourada (lisa sem brasão)", m: 1, r: 1 },
+    { id: "11", d: "Meia esportiva branca, cano médio", m: 3, r: 8 },
+    { id: "12", d: "Tênis preto", m: 1, r: 2 }
+  ]},
+
+  { cat: "EDUCAÇÃO FÍSICA MILITAR - 5ºA (MASCULINO)", items: [
+    { id: "13_ef", d: "Camisa de malha meia manga dry fit branca com brasão do CBMPA bordado", m: 3, r: 5 },
+    { id: "14_ef", d: "Short de educação física vermelho", m: 3, r: 5 },
+    { id: "15_ef", d: "Sandália de dedo na cor preta", m: 1, r: 1 },
+    { id: "16_ef", d: "Sunga preta", m: 2, r: 3 }
+  ]},
+
+  { cat: "MATERIAIS DE CAMA E BANHO", items: [
+    { id: "17", d: "Lençol de cama branco (tecido oxford, liso de solteiro)", m: 1, r: 1 },
+    { id: "18", d: "Cobertor de colchão branco com elástico (solteiro)", m: 1, r: 1 },
+    { id: "19", d: "Toalha de banho vermelha", m: 2, r: 2 },
+    { id: "20", d: "Toalha de rosto vermelha", m: 2, r: 2 }
+  ]},
+
+  { cat: "KIT MANUTENÇÃO DE UNIFORME", items: [
+    { id: "21", d: "Ferro de passar roupa", m: 1, r: 1 },
+    { id: "22", d: "Agulha e linha", m: 1, r: 1 },
+    { id: "23", d: "Graxa preta", m: 1, r: 1 },
+    { id: "24", d: "Aparelho de barbear", m: 1, r: 1 },
+    { id: "25", d: "Escova para sapato", m: 1, r: 1 }
+  ]},
+
+  { cat: "KIT DE HIGIENE - MASCULINO", items: [
+    { id: "26", d: "Creme dental, escova de dentes, fio dental, sabonete, saboneteira, desodorante, cortador de unhas e protetor solar", m: 1, r: 1 }
+  ]},
+
+  { cat: "KIT OPERACIONAL", items: [
+    { id: "27", d: "Bolsa preta tipo mochila mínimo 30L sem identificação (recomendado 55L)", m: 1, r: 1 },
+    { id: "28", d: "Cantil preto de 1L com porta cantil", m: 1, r: 1 },
+    { id: "29", d: "6m de cabo da vida na cor laranja de 12mm", m: 1, r: 1 },
+    { id: "30", d: "Cinto N.A vermelho com ilhós pretos", m: 1, r: 1 },
+    { id: "31", d: "Lanterna pequena de mão", m: 1, r: 1 }
+  ]},
+
+  { cat: "KIT MATERIAL ESCREVENTE", items: [
+    { id: "32", d: "Bloco de anotações de bolso", m: 1, r: 1 },
+    { id: "33", d: "Caneta esferográfica", m: 4, r: 4 },
+    { id: "34", d: "Lápis", m: 2, r: 2 },
+    { id: "35", d: "Borracha", m: 1, r: 1 },
+    { id: "36", d: "Caderno de matérias vermelho encapado com brasão do CFAE em fundo branco", m: 2, r: 2 }
+  ]},
+
+  { cat: "AULA MAGNA (SOCIAL)", items: [
+    { id: "37", d: "Terno preto liso", m: 1, r: 1 },
+    { id: "38", d: "Camisa social branca", m: 1, r: 1 },
+    { id: "39", d: "Gravata vertical", m: 1, r: 1 },
+    { id: "40", d: "Calça preta social lisa", m: 1, r: 1 },
+    { id: "41", d: "Cinto social preto", m: 1, r: 1 },
+    { id: "42", d: "Sapato social preto", m: 1, r: 1 },
+    { id: "43", d: "Meia social preta", m: 1, r: 1 }
+  ]}
+];
 
         window.showSlide = (id) => {
             document.querySelectorAll('.slide-container').forEach(s => s.classList.remove('active'));
