@@ -425,6 +425,21 @@
         
         switchTaf('masc');
 
+    
+        // CORREÇÃO DA BARRA DE PESQUISA
+        const inputBusca = document.getElementById('searchAlunos');
+        if (inputBusca) {
+            inputBusca.addEventListener('input', (e) => {
+                const termo = e.target.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                const linhas = document.querySelectorAll('#alunoTableBody tr');
+                
+                linhas.forEach(linha => {
+                    const nome = linha.innerText.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                    linha.style.display = nome.includes(termo) ? '' : 'none';
+                });
+            });
+        }
+
     </script>
 </body>
 </html>
